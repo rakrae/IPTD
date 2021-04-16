@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="504.0" prefWidth="528.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.YearList_Controller">
+   <children>
+      <Pane prefHeight="504.0" prefWidth="528.0">
+         <children>
+            <ImageView fitHeight="504.0" fitWidth="528.0">
+               <image>
+                  <Image url="@../../Programm%20Fotos/ts-space-sun-and-solar-viewing-facts-versus-fiction.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <BorderPane prefHeight="504.0" prefWidth="528.0">
+         <top>
+            <Label text="I.P.T.D Lists" textFill="WHITE" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Arial Bold" size="30.0" />
+               </font>
+            </Label>
+         </top>
+         <bottom>
+            <HBox spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="closeProgram" mnemonicParsing="false" onAction="#handleClosePressed" style="-fx-background-color: #ffffff;" text="Close">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackPressed" style="-fx-background-color: #ffffff;" text="Back">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="createNewList" mnemonicParsing="false" onAction="#handleCreateNewListPressed" style="-fx-background-color: #ffffff;" text="Create new list">
+                     <HBox.margin>
+                        <Insets left="293.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" />
+               </padding>
+            </HBox>
+         </bottom>
+         <center>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TableView fx:id="iptd_listsView" opacity="0.7" prefHeight="310.0" prefWidth="428.0">
+                    <columns>
+                      <TableColumn fx:id="iptdListsColumn" prefWidth="332.0" text="I.P.T.D Lists" />
+                      <TableColumn fx:id="deleteColumn" minWidth="100.0" prefWidth="85.0" text="Delete" />
+                    </columns>
+                     <VBox.margin>
+                        <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+                     </VBox.margin>
+                  </TableView>
+                  <TextField fx:id="iptdTextField" alignment="CENTER" opacity="0.7" promptText="Year + I.P.T.D list title">
+                     <VBox.margin>
+                        <Insets bottom="50.0" left="100.0" right="100.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

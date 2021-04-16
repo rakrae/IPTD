@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<persistence-unit name="IPTD" transaction-type="RESOURCE_LOCAL">
+		<non-jta-data-source>IPTD</non-jta-data-source>
+		<class>model.Account</class>
+		<class>model.YearList</class>
+		<class>model.NewYearsResolution</class>
+		<class>model.Target</class>
+		<class>model.Comment</class>
+		<properties>
+			<property name="jakarta.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+			<property name="jakarta.persistence.jdbc.url" value="jdbc:derby:IPTD; create=true"/>
+			<property name="jakarta.persistence.jdbc.user" value="Adi"/>
+			<property name="jakarta.persistence.jdbc.password" value="test"/>
+			<property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/> <!-- drop-and-create erstellt beim Start eine neue DB - development  -->
+			<property name="jakarta.persistence.schema-generation.database.action" value="none"/> <!-- none - production  -->
+			<property name="eclipselink.logging.level.sql" value="FINE" />
+		</properties>
+	</persistence-unit>
+</persistence>

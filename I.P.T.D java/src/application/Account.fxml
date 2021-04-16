@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="504.0" prefWidth="528.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AccountController">
+   <children>
+      <Pane prefHeight="504.0" prefWidth="528.0" />
+      <ImageView fitHeight="504.0" fitWidth="528.0">
+         <image>
+            <Image url="@../../Programm%20Fotos/ArtPropelled.png" />
+         </image>
+      </ImageView>
+      <BorderPane prefHeight="504.0" prefWidth="528.0">
+         <top>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="titleFirstNameText" text="First name" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="titleAccountText" text="account" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+               <BorderPane.margin>
+                  <Insets left="100.0" />
+               </BorderPane.margin>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </HBox>
+         </top>
+         <left>
+            <VBox prefHeight="403.0" prefWidth="264.0" spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="accountText" text="Account" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Label fx:id="firstNameText" text="First name" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lastNameText" text="Last name" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Bold" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <Button fx:id="iptdListsButton" mnemonicParsing="false" onAction="#handleIPTDListsPressed" style="-fx-background-color: #ffffff;" text="I.P.T.D Lists">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="-70.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="editAccountButton" mnemonicParsing="false" onAction="#handleEditAccountPressed" style="-fx-background-color: #ffffff;" text="Edit Account">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Label prefHeight="15.0" prefWidth="317.0" text="Progress of the current year displayed " textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="140.0" />
+                     </VBox.margin>
+                  </Label>
+                  <ProgressBar fx:id="progressBar" prefHeight="3.0" prefWidth="264.0" progress="0.0">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets top="-20.0" />
+                     </padding>
+                  </ProgressBar>
+                  <ProgressIndicator fx:id="progressIndicator" prefHeight="64.0" prefWidth="264.0" progress="0.0">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="210.0" right="20.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow height="96.6" radius="48.912499999999994" spread="0.8" width="101.05">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                           <input>
+                              <ColorAdjust />
+                           </input>
+                        </DropShadow>
+                     </effect>
+                  </ProgressIndicator>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="-80.0" left="30.0" />
+               </BorderPane.margin>
+               <padding>
+                  <Insets top="-20.0" />
+               </padding>
+            </VBox>
+         </left>
+         <bottom>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleClosePressed" style="-fx-background-color: #ffffff;" text="Close">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackPressed" style="-fx-background-color: #ffffff;" text="Back">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDeleteAccountPressed" style="-fx-background-color: #ffffff;" text="Delete account">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="295.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <padding>
+                  <Insets left="8.0" top="65.0" />
+               </padding>
+            </HBox>
+         </bottom>
+         <center>
+            <Label prefHeight="293.0" prefWidth="259.0" text="“Remember to look up at the stars and not down at your feet. Try to make sense of what you see and wonder about what makes the universe exist. Be curious. And however difficult life may seem, there is always something you can do and succeed at.It matters that you don't just give up.” - Stephen Hawking" textFill="WHITE" wrapText="true" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Arial Bold" size="13.0" />
+               </font>
+               <padding>
+                  <Insets top="-100.0" />
+               </padding>
+            </Label>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
