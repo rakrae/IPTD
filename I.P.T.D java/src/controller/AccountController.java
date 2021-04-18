@@ -65,8 +65,7 @@ public class AccountController {
 		stageBack.close();
 		
 		try { // Hier wird die zweite Fenster geöffneta
-		
-			int i = 0;
+
 
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/application/Login.fxml"));
