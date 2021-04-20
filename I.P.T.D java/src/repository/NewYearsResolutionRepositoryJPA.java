@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import model.NewYearsResolution;
 
-public class IPTD_List_RepositoryJPA implements IPTD_List_Repository {
+public class NewYearsResolutionRepositoryJPA implements NewYearsResolutionRepository {
 
 	@Override
 	public void add(NewYearsResolution iptd_list) {

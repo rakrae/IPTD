@@ -56,4 +56,13 @@ public class Target implements Serializable{
 		this.comments = comments;
 	}
 
+	/*
+	 * There should be a countdown method which comes along each target
+	 * that is added to the New Year's Resolution List
+	 * 
+	 */
+	
+	
+	
+	
 }

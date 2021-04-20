@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class NewYearsResolution implements Serializable{
@@ -15,6 +16,8 @@ public class NewYearsResolution implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String iptdListName;
+	
+	@OneToMany
 	private List<Target> targets = new ArrayList<>();
 	
 	public NewYearsResolution(long id, String iptdListName, List<Target> targets) {
@@ -40,6 +43,10 @@ public class NewYearsResolution implements Serializable{
 		this.targets = targets;
 	}
 	
+	/*
+	 * Here comes the countdown method for each list created
+	 * 
+	 */
 	
 	
 	

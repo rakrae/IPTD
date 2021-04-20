@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import model.YearList;
 
-public interface IPTD_Lists_Repository {
+public interface YearListRepository {
 	
 	void add(YearList iptd_lists);
 	

@@ -42,7 +42,7 @@ public class DatabaseCreator {
 			
 			Statement stmt = con.createStatement();
 			
-			stmt.execute();
+//			stmt.execute();
 			
 			
 		} catch (SQLException e) {

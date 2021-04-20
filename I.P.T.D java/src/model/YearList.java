@@ -40,7 +40,6 @@ public class YearList implements Serializable{
 	public void setLists(List<NewYearsResolution> lists) {
 		this.lists = lists;
 	}
-
 	
 	
 }

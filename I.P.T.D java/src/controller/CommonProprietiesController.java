@@ -1,8 +1,6 @@
 package controller;
 
 import java.text.SimpleDateFormat;
-import java.util.Properties;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -14,10 +12,10 @@ import model.YearList;
 import model.Target;
 import repository.AccountRepository;
 import repository.AccountRepositoryJPA;
-import repository.IPTD_List_Repository;
-import repository.IPTD_List_RepositoryJPA;
-import repository.IPTD_Lists_Repository;
-import repository.IPTD_Lists_RepositoryJPA;
+import repository.NewYearsResolutionRepository;
+import repository.NewYearsResolutionRepositoryJPA;
+import repository.YearListRepository;
+import repository.YearListRepositoryJPA;
 import repository.TargetRepository;
 import repository.TargetRepositoryJPA;
 
@@ -29,11 +27,11 @@ public class CommonProprietiesController {
 	static ObservableList<Account> accountList = FXCollections.observableArrayList();
 	static ObjectProperty<Account> selectedAccount = new SimpleObjectProperty<Account>();
 	
-	static IPTD_Lists_Repository iptd_lists_repository = new IPTD_Lists_RepositoryJPA();
+	static YearListRepository iptd_lists_repository = new YearListRepositoryJPA();
 	static ObservableList<YearList> iptdLists = FXCollections.observableArrayList();
 	static ObjectProperty<YearList> selectedIPTDLists = new SimpleObjectProperty<YearList>();
 	
-	static IPTD_List_Repository iptd_list_repository = new IPTD_List_RepositoryJPA();
+	static NewYearsResolutionRepository iptd_list_repository = new NewYearsResolutionRepositoryJPA();
 	static ObservableList<NewYearsResolution> iptdList = FXCollections.observableArrayList();
 	static ObjectProperty<NewYearsResolution> selectedIPTDList = new SimpleObjectProperty<NewYearsResolution>();
 	

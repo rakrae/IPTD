@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import model.NewYearsResolution;
 
-public interface IPTD_List_Repository {
+public interface NewYearsResolutionRepository {
 	
 	void add(NewYearsResolution iptd_list);
 	
