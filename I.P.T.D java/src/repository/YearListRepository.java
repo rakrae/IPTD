@@ -7,14 +7,14 @@ import model.YearList;
 
 public interface YearListRepository {
 	
-	void add(YearList iptd_lists);
+	void add(YearList yearList);
 	
 	Optional<YearList> read(long id);
 	
 	List<YearList> readAll();
 	
-	YearList updateList(YearList iptd_lists);
+	YearList updateList(YearList yearList);
 	
-	void delete(YearList iptd_lists);
+	void delete(YearList yearList);
 	
 }

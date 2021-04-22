@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Account implements Serializable {
@@ -12,15 +13,27 @@ public class Account implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
 	private String account;
 	private String password;
 	private String firstName;
 	private String lastName;
 	private String gender;
 	private int age;
+	
+	@OneToOne(mappedBy = "account")
 	private YearList yearList;
 
 	public Account() {}
+
+	
+	public YearList getYearList() {
+		return yearList;
+	}
+
+	public void setYearList(YearList yearList) {
+		this.yearList = yearList;
+	}
 
 	public Account(String account, String password, String firstName, String lastName, String gender, int age,
 			YearList yearList) {

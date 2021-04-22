@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Comment implements Serializable {
@@ -13,6 +14,9 @@ public class Comment implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String text;
+	
+	@ManyToOne
+	private Target target;
 	
 	public Comment() {}
 	

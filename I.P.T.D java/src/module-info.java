@@ -6,6 +6,7 @@ module I.P.T.D {
 	requires java.desktop;
 	requires eclipselink;
 	requires jakarta.persistence;
+	requires org.apache.derby.engine;
 	
 	opens model to eclipselink;
 	opens controller to javafx.fxml;

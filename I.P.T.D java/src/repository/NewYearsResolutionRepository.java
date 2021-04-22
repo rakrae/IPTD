@@ -7,13 +7,13 @@ import model.NewYearsResolution;
 
 public interface NewYearsResolutionRepository {
 	
-	void add(NewYearsResolution iptd_list);
+	void add(NewYearsResolution newYearsResolution);
 	
 	Optional<NewYearsResolution> read(long id);
 	
 	List<NewYearsResolution> readAll();
 	
-	NewYearsResolution updateList(NewYearsResolution iptd_list);
+	NewYearsResolution updateList(NewYearsResolution newYearsResolution);
 	
-	void delete(NewYearsResolution iptd_list);
+	void delete(NewYearsResolution newYearsResolution);
 }
