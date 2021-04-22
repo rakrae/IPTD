@@ -15,24 +15,32 @@ public class NewYearsResolution implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	private String iptdListName;
+	private String newYearsResolutionName;
 	
 	@OneToMany
 	private List<Target> targets = new ArrayList<>();
 	
-	public NewYearsResolution(long id, String iptdListName, List<Target> targets) {
+	public NewYearsResolution() {}
+	
+	public NewYearsResolution(long id, String nyrName, List<Target> targets) {
 		super();
 		this.id = id;
-		this.iptdListName = iptdListName;
+		this.newYearsResolutionName = nyrName;
+		this.targets = targets;
+	}
+	
+	public NewYearsResolution(String nyrName, List<Target> targets) {
+		super();
+		this.newYearsResolutionName = nyrName;
 		this.targets = targets;
 	}
 
-	public String getIptdListName() {
-		return iptdListName;
+	public String getNewYearsResolutionName() {
+		return newYearsResolutionName;
 	}
 
-	public void setIptdListName(String iptdListName) {
-		this.iptdListName = iptdListName;
+	public void setNewYearsResolutionName(String nyrName) {
+		this.newYearsResolutionName = nyrName;
 	}
 
 	public List<Target> getTargets() {

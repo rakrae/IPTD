@@ -15,7 +15,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class EditAccountController {
+public class EditAccountController extends CommonProprietiesController {
 
     @FXML
     private ResourceBundle resources;

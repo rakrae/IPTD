@@ -14,7 +14,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class AccountController {
+public class AccountController extends CommonProprietiesController {
 
     @FXML
     private ResourceBundle resources;

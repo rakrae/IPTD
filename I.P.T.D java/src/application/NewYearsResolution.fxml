@@ -72,7 +72,7 @@
          <center>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <TableView fx:id="iptdListView" opacity="0.7" prefHeight="310.0" prefWidth="428.0">
+                  <TableView fx:id="nyrListView" opacity="0.7" prefHeight="310.0" prefWidth="428.0">
                     <columns>
                       <TableColumn fx:id="targetColumn" prefWidth="342.0" text="Target" />
                       <TableColumn fx:id="deleteColumn" prefWidth="85.0" text="Delete" />

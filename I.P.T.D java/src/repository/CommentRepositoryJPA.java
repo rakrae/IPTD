@@ -3,80 +3,80 @@ package repository;
 import java.util.List;
 import java.util.Optional;
 
-import controller.CommonProprietiesController;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
-import model.Account;
+import model.Comment;
 
-public class AccountRepositoryJPA implements AccountRepository {
-
+public class CommentRepositoryJPA implements CommentRepository{
+	
 	private static final String PERSISTANCE_UNIT_NAME = "IPTD";
 	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTANCE_UNIT_NAME);
 	private static final EntityManager em = emf.createEntityManager();
-
+	
 	@Override
-	public void add(Account account) {
-
-		EntityTransaction et = em.getTransaction();
-
-		et.begin();
-		em.persist(account);
-		et.commit();
-
-		System.out.println("Account added");
-
-	}
-
-	@Override
-	public Optional<Account> read(long id) {
-
-		Account accountAC = null;
-		EntityTransaction et = em.getTransaction();
-
-		et.begin();
-		accountAC = em.find(Account.class, id);
-		et.commit();
-
-		System.out.println("Account read");
-
-		return Optional.ofNullable(accountAC);
-	}
-
-	@Override
-	public List<Account> readAll() {
-
-		EntityTransaction et = em.getTransaction();
-
-		System.out.println("Read all Accounts");
-		et.begin();
-		List<Account> accounts = (List<Account>) em.createQuery("SELECT a FROM Account a").getResultList();
-		et.commit();
-		
-		return accounts;
-	}
-
-	@Override
-	public Account updateAccount(Account account) {
-
-		EntityTransaction et = em.getTransaction();
-
-		et.begin();
-		Account mergedAccount = em.merge(account);
-		et.commit();
-
-		return mergedAccount;
-	}
-
-	@Override
-	public void delete(Account account) {
+	public void add(Comment comment) {
 		
 		EntityTransaction et = em.getTransaction();
 		
 		et.begin();
-		em.remove(account);
+		em.persist(comment);
 		et.commit();
+		
+		System.out.println("Comment added");
+	}
+
+	@Override
+	public Optional<Comment> read(long id) {
+		
+		Comment comm = null;
+		EntityTransaction et = em.getTransaction();
+		
+		et.begin();
+		comm = em.find(Comment.class, id);
+		et.commit();
+		
+		System.out.println("Comment read");
+		
+		return Optional.ofNullable(comm);
+	}
+
+	@Override
+	public List<Comment> readlAdd() {
+		
+		EntityTransaction et = em.getTransaction();
+		
+		System.out.println("Read all comments");
+		
+		et.begin();
+		List<Comment> comments =(List<Comment>) em.createQuery("SELECT c FROM Comment c").getResultList();
+		et.commit();
+		
+		return comments;
+	}
+
+	@Override
+	public Comment updateComment(Comment comment) {
+		
+		EntityTransaction et = em.getTransaction();
+		
+		et.begin();
+		Comment mergedComment = em.merge(comment);
+		et.commit();
+		
+		return mergedComment;
+	}
+
+	@Override
+	public void delete(Comment comment) {
+		
+		EntityTransaction et = em.getTransaction();
+		
+		et.begin();
+		em.remove(comment);
+		et.commit();
+		
 		
 	}
 

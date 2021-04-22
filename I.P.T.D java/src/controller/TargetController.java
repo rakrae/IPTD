@@ -9,9 +9,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import model.Comment;
 import model.Target;
 
-public class TargetController {
+public class TargetController extends CommonProprietiesController{
 
     @FXML
     private ResourceBundle resources;
@@ -36,21 +37,40 @@ public class TargetController {
 
     @FXML
     private Button addComment;
+    
+    @FXML
+    private Button updateComment;
 
     @FXML
-    private TableView<Target> commentsTableView;
+    private TableView<Comment> commentsTableView;
 
     @FXML
-    private TableColumn<Target, String> commentColumn;
+    private TableColumn<Comment, String> commentColumn;
 
     @FXML
-    private TableColumn<Target, Target> editColumn;
+    private TableColumn<Comment, Target> editColumn;
 
     @FXML
     private TextArea commentTextArea;
 
     @FXML
     void handleAddCommentPressed(ActionEvent event) {
+    	
+    	// Adding a comment
+    	String comm = commentTextArea.getText();
+    	
+    	// checking if it is empty
+    	if(!comm.isEmpty()) {
+    		
+    		Comment comment = new Comment(comm);
+    		System.out.println(comment);
+    		
+    		commentList.add(comment);
+    		
+    		System.out.println(commentList);
+    		
+    	}
+    	
 
     }
 
@@ -75,6 +95,11 @@ public class TargetController {
     void handleTargetFailedPressed(ActionEvent event) {
 
     }
+    
+    @FXML
+    void handleUpdateCommentPressed(ActionEvent event) {
+
+    }
 
     @FXML
     void initialize() {
@@ -84,10 +109,15 @@ public class TargetController {
         assert closeProgram != null : "fx:id=\"closeProgram\" was not injected: check your FXML file 'Target.fxml'.";
         assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'Target.fxml'.";
         assert addComment != null : "fx:id=\"addComment\" was not injected: check your FXML file 'Target.fxml'.";
+        assert updateComment != null : "fx:id=\"updateComment\" was not injected: check your FXML file 'Target.fxml'.";
         assert commentsTableView != null : "fx:id=\"commentsTableView\" was not injected: check your FXML file 'Target.fxml'.";
         assert commentColumn != null : "fx:id=\"commentColumn\" was not injected: check your FXML file 'Target.fxml'.";
         assert editColumn != null : "fx:id=\"editColumn\" was not injected: check your FXML file 'Target.fxml'.";
         assert commentTextArea != null : "fx:id=\"commentTextArea\" was not injected: check your FXML file 'Target.fxml'.";
 
+        //TODO: add dummies + set the edit button (add an update button for after editing an comment)
+        
+        
+        
     }
 }

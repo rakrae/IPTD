@@ -4,16 +4,26 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 import model.NewYearsResolution;
+import model.Target;
 
-public class NewYearsResolutionController {
+public class NewYearsResolutionController extends CommonProprietiesController {
 
     @FXML
     private ResourceBundle resources;
@@ -34,26 +44,65 @@ public class NewYearsResolutionController {
     private Button addNewTarget;
 
     @FXML
-    private TableView<NewYearsResolution> iptdListView;
+    private TableView<Target> nyrListView;
 
     @FXML
-    private TableColumn<NewYearsResolution, String> targetColumn;
+    private TableColumn<Target, String> targetColumn;
 
     @FXML
-    private TableColumn<NewYearsResolution, String> deleteColumn;
+    private TableColumn<Target, String> deleteColumn;
 
     @FXML
     private TextField targetTextField;
 
     @FXML
     void handleAddNewTargetPressed(ActionEvent event) {
-
+    	
+    	// adding a target
+    	String target_Text = targetTextField.getText();
+    	
+    	if(!target_Text.isEmpty()) {
+    		
+    		Target target = new Target();
+    		System.out.println(target);
+    		
+    		targetList.add(target);
+    		
+    		System.out.println(targetList);
+    	}
+    	
+    	
     }
 
     @FXML
     void handleBackPressed(ActionEvent event) {
 
-    	Platform.exit();
+    	Stage stageLogin = (Stage) back.getScene().getWindow();
+		stageLogin.close();
+    	
+		try { // Hier wird die zweite Fenster geöffnet
+
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("/application/YearList.fxml"));
+
+			Parent root = (Parent) loader.load();
+
+
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			
+//			stage.setOnHidden(e -> newStage.show()); // in plus
+			
+			stage.show();
+			
+			stageLogin.hide();
+
+			
+		} catch (Exception e) {
+			System.err.println("Can not load YearList");
+			e.printStackTrace();
+		}
     	
     }
 
@@ -70,10 +119,69 @@ public class NewYearsResolutionController {
         assert closeProgram != null : "fx:id=\"closeProgram\" was not injected: check your FXML file 'IPTD_List.fxml'.";
         assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'IPTD_List.fxml'.";
         assert addNewTarget != null : "fx:id=\"addNewTarget\" was not injected: check your FXML file 'IPTD_List.fxml'.";
-        assert iptdListView != null : "fx:id=\"iptdListView\" was not injected: check your FXML file 'IPTD_List.fxml'.";
+        assert nyrListView != null : "fx:id=\"iptdListView\" was not injected: check your FXML file 'IPTD_List.fxml'.";
         assert targetColumn != null : "fx:id=\"targetColumn\" was not injected: check your FXML file 'IPTD_List.fxml'.";
         assert deleteColumn != null : "fx:id=\"deleteColumn\" was not injected: check your FXML file 'IPTD_List.fxml'.";
         assert targetTextField != null : "fx:id=\"targetTextField\" was not injected: check your FXML file 'IPTD_List.fxml'.";
 
+        //TODO: add dummies + set the delete button
+        
+        // adding a target
+        addNewTarget.disabledProperty().and(targetTextField.textProperty().isEmpty());
+        
+        // targets in the NYR
+        nyrListView.setItems(targetList);
+        
+        // target for each column
+        targetColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTargetName()));
+        
+        // for changes
+        nyrListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Target>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Target> observable, Target oldValue, Target newValue) {
+				
+				System.out.println("Table selection called: " + newValue);
+				selectedTarget.set(newValue);
+				
+			}
+        });
+        
+        
+        // delete button
+        var deleteCallBack = new Callback<TableColumn<Target, String>, TableCell<Target, String>>() {
+
+			@Override
+			public TableCell<Target, String> call(TableColumn<Target, String> param) {
+				
+				TableCell<Target, String> cell = new TableCell<Target, String>(){
+				
+				Button deleteButton = new Button("Delete");
+				
+				public void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					if(empty) {
+						setGraphic(null);
+						setText(null);
+						
+					} else {
+						
+						deleteButton.setOnAction(e -> {
+							Target target = getTableView().getItems().get(getIndex());
+							targetList.remove(target);
+							
+						});
+						setGraphic(deleteButton);
+						setText(null);
+					}
+					
+					}
+				};
+				return cell;
+			}
+        	
+        };
+        deleteColumn.setCellFactory(deleteCallBack);
+        
     }
 }

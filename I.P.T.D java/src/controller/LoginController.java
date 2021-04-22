@@ -15,7 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class LoginController {
+public class LoginController extends CommonProprietiesController {
 
     @FXML
     private ResourceBundle resources;

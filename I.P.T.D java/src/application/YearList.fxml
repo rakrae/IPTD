@@ -64,16 +64,16 @@
          <center>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <TableView fx:id="iptd_listsView" opacity="0.7" prefHeight="310.0" prefWidth="428.0">
+                  <TableView fx:id="yearListView" opacity="0.7" prefHeight="310.0" prefWidth="428.0">
                     <columns>
-                      <TableColumn fx:id="iptdListsColumn" prefWidth="332.0" text="I.P.T.D Lists" />
+                      <TableColumn fx:id="yearListColumn" prefWidth="332.0" text="I.P.T.D Lists" />
                       <TableColumn fx:id="deleteColumn" minWidth="100.0" prefWidth="85.0" text="Delete" />
                     </columns>
                      <VBox.margin>
                         <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                      </VBox.margin>
                   </TableView>
-                  <TextField fx:id="iptdTextField" alignment="CENTER" opacity="0.7" promptText="Year + I.P.T.D list title">
+                  <TextField fx:id="nyrTextField" alignment="CENTER" opacity="0.7" promptText="Year + I.P.T.D list title">
                      <VBox.margin>
                         <Insets bottom="50.0" left="100.0" right="100.0" />
                      </VBox.margin>
