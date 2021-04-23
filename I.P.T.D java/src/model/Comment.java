@@ -15,9 +15,6 @@ public class Comment implements Serializable {
 	private long id;
 	private String text;
 	
-	@ManyToOne
-	private Target target;
-	
 	public Comment() {}
 	
 	public Comment(long id, String text) {

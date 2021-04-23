@@ -1,6 +1,7 @@
 package controller;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -83,6 +85,18 @@ public class NewAccountController extends CommonProprietiesController {
 
     @FXML
     void handleCreateAccountPressed(ActionEvent event) {
+    	
+    	createAccount.setOnAction(e -> {
+    		ModalDialog dialog = new ModalDialog();
+    		Optional<ButtonType> result = dialog.showAndWait();
+    		if(result.isPresent()) {
+    			if(result.get() == ButtonType.OK) {
+    				System.out.println("Dialog ok");
+    			} else {
+    				System.out.println("Dialog cancel");
+    			}
+    		}
+    	});
 
     }
 

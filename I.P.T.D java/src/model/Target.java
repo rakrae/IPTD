@@ -17,10 +17,6 @@ public class Target implements Serializable{
 	private long id;
 	private String targetName;
 	
-	@ManyToOne
-//	@JoinColumn();
-	private NewYearsResolution nyr;
-	
 	@OneToMany
 	private List<Comment> comments;
 	

@@ -21,7 +21,8 @@ public class Account implements Serializable {
 	private String gender;
 	private int age;
 	
-	@OneToOne(mappedBy = "account")
+	// damit kannst du von Account auf yearList zugreifen kannst
+	@OneToOne
 	private YearList yearList;
 
 	public Account() {}

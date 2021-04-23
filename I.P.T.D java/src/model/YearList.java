@@ -18,10 +18,6 @@ public class YearList implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	@OneToOne
-	@JoinColumn(name = "account")
-	private Account account;
-	
 	@OneToMany // 1 - N
 	private List<NewYearsResolution> lists = new ArrayList<NewYearsResolution>();
 
