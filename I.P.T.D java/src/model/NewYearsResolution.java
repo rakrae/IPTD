@@ -3,10 +3,13 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -50,12 +53,17 @@ public class NewYearsResolution implements Serializable{
 	public void setTargets(List<Target> targets) {
 		this.targets = targets;
 	}
+
+	@Override
+	public String toString() {
+		return "NewYearsResolution id: " + id + "  newYearsResolutionName: " + newYearsResolutionName + "  targets: "
+				+ targets;
+	}
 	
 	/*
 	 * Here comes the countdown method for each list created
 	 * 
 	 */
-	
 	
 	
 }

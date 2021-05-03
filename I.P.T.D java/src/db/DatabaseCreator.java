@@ -1,25 +1,26 @@
 package db;
 
 import java.sql.Statement;
-
+import java.util.List;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 import model.Account;
-import repository.AccountRepository;
-import repository.AccountRepositoryJPA;
+import model.Comment;
+import model.NewYearsResolution;
+import model.Target;
+import model.YearList;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
 
 public class DatabaseCreator {
 
-	private static final String PERSISTANCE_NAME = "jdbc:derby:IPTD; create=true; user=Adi; password=test";
+	private static final String PERSISTANCE_NAME = "IPTD";
 
 	public static void main(String[] args) {
-		
+
 		insertDummyData();
-		
-		
+
 	}
 
 	private static void createNewDatabase() {
@@ -28,33 +29,37 @@ public class DatabaseCreator {
 
 	private static void dropOldTable() {
 
-		
 	}
 
 	private static void insertDummyData() {
 
-		AccountRepository repository = new AccountRepositoryJPA();
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTANCE_NAME);
+		EntityManager em = emf.createEntityManager();
 		
-		Account account = new Account();
-		repository.add(account);
+		EntityTransaction et = em.getTransaction();
 		
-		try {
-			Connection con = DriverManager.getConnection(PERSISTANCE_NAME);
-			System.out.println("Connection established");
+		List<Comment> commList = List.of(new Comment("Think about what you want"),
+				new Comment("Figure out what do you need to be done to get it"),
+				new Comment("Structure your plan to get it"), new Comment("Now work for it and be consistent"),
+				new Comment("Remember to take breaks"));
 
-			PreparedStatement pStmt = con.prepareStatement(
-					"INSERT INTO ACCOUNT (account, password, firstName, lastName, gender, age) VALUES (?, ?, ?, ?, ?, ?)");
+		List<Target> targetList = List.of(new Target("Score at the Java Project", commList));
 
-			pStmt.setString(1, "Rakrae");
-			pStmt.setString(2, "Adi");
-			pStmt.setString(3, "Bihuneti");
-			pStmt.setString(4, "Male");
-			pStmt.setInt(5, 27);
+		List<NewYearsResolution> nyrList = List.of(new NewYearsResolution("2021", targetList));
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		YearList yearList = new YearList(nyrList);
+
+		Account account = new Account(0,"Rakrae", "whotherenow", "Adi", "Bihuneti", "Male", 27, yearList);
+		
+		
+		et.begin();
+		
+		em.persist(account);
+		
+		et.commit();
+		
+		em.close();
+		emf.close();
 
 	}
 

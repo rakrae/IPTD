@@ -7,12 +7,32 @@ public class ModalDialog extends Dialog<ButtonType> {
 	
 	public ModalDialog() {
 		
-		this.setContentText("Excelent");
-		this.setHeaderText("Task");
+		/*
+		 * It is not ready yet and still
+		 * working on it
+		 * 
+		 */
+		
+		this.setHeaderText("Account succesfully created!");
+		this.setContentText("Press ok and login");
 		this.getDialogPane().getButtonTypes().add(ButtonType.OK);
-		this.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
 		
 	}
+	
+	
+	public void dialog() {
+		/*
+		 * 
+		 * Testing !!!
+		 * 
+		 */
+		
+		this.setHeaderText("Account succesfully created!");
+		this.setContentText("Press ok and login");
+		this.getDialogPane().getButtonTypes().add(ButtonType.OK);
+	}
+	
+	
 	
 	
 }

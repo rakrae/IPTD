@@ -74,8 +74,8 @@
                <children>
                   <TableView fx:id="nyrListView" opacity="0.7" prefHeight="310.0" prefWidth="428.0">
                     <columns>
-                      <TableColumn fx:id="targetColumn" prefWidth="342.0" text="Target" />
-                      <TableColumn fx:id="deleteColumn" prefWidth="85.0" text="Delete" />
+                      <TableColumn fx:id="targetColumn" prefWidth="367.0" text="Target" />
+                      <TableColumn fx:id="deleteColumn" minWidth="46.0" prefWidth="60.0" text="Delete" />
                     </columns>
                      <VBox.margin>
                         <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />

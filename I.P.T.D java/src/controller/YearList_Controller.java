@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,148 +21,193 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.NewYearsResolution;
 import model.YearList;
+import repository.NewYearsResolutionRepositoryJPA;
 
 public class YearList_Controller extends CommonProprietiesController {
 
-    @FXML
-    private ResourceBundle resources;
+	@FXML
+	private ResourceBundle resources;
 
-    @FXML
-    private URL location;
+	@FXML
+	private URL location;
 
-    @FXML
-    private Button closeProgram;
+	@FXML
+	private Button closeProgram;
 
-    @FXML
-    private Button backButton;
+	@FXML
+	private Button backButton;
 
-    @FXML
-    private Button createNewList;
+	@FXML
+	private Button createNewList;
 
-    @FXML
-    private TableView<NewYearsResolution> yearListView;
+	@FXML
+	private TableView<NewYearsResolution> yearListView;
 
-    @FXML
-    private TableColumn<NewYearsResolution, String> yearListColumn;
+	@FXML
+	private TableColumn<NewYearsResolution, String> yearListColumn;
 
-    @FXML
-    private TableColumn<NewYearsResolution, String> deleteColumn;
-    
-    @FXML
-    private TextField nyrTextField;
+	@FXML
+	private TableColumn<NewYearsResolution, String> deleteColumn;
 
-    @FXML
-    void handleBackPressed(ActionEvent event) {
-    	
-    	Stage stageLists = (Stage) backButton.getScene().getWindow();
-    	stageLists.close();
-    	
-    	try { // Hier wird die zweite Fenster geöffnet
+	@FXML
+	private TextField nyrTextField;
 
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("/application/Account.fxml"));
+	@FXML
+	void handleBackPressed(ActionEvent event) {
 
-			Parent root = (Parent) loader.load();
+		Stage stageLists = (Stage) backButton.getScene().getWindow();
+		stageLists.close();
 
+		openScene(PERSISTANCE_NAME_ACCOUNT);
+		
+		stageLists.close();
+	}
 
-			Scene scene = new Scene(root);
-			Stage stage = new Stage();
-			stage.setScene(scene);
-			
-//			stage.setOnHidden(e -> newStage.show()); // in plus
-			
-			stage.show();
-			
-			stageLists.hide();
-			
-		 // dazu
-			
-		} catch (Exception e) {
-			System.err.println("Can not load Account");
-			e.printStackTrace();
+	@FXML
+	void handleClosePressed(ActionEvent event) {
+
+		System.exit(0);
+
+	}
+
+	@FXML
+	void handleCreateNewListPressed(ActionEvent event) {
+
+		// Adding a NYR list
+		String nyrName = nyrTextField.getText();
+
+		// checking if the name is not empty
+		if (!nyrName.isEmpty()) {
+
+			NewYearsResolution newyearsresolution = new NewYearsResolution(nyrName, targetList);
+			System.out.println(newyearsresolution);
+
+			nyrList.add(newyearsresolution);
+			nyrRepository.add(newyearsresolution);
+
+			System.out.println(nyrList);
 		}
-    	
 
-    }
+	}
 
-    @FXML
-    void handleClosePressed(ActionEvent event) {
-    	
-    	System.exit(0);
+	@FXML
+	void initialize() {
 
-    }
+		assert closeProgram != null
+				: "fx:id=\"closeProgram\" was not injected: check your FXML file 'IPTD_Lists.fxml'.";
+		assert backButton != null : "fx:id=\"back\" was not injected: check your FXML file 'IPTD_Lists.fxml'.";
+		assert createNewList != null
+				: "fx:id=\"createNewList\" was not injected: check your FXML file 'IPTD_Lists.fxml'.";
+		assert yearListView != null
+				: "fx:id=\"iptd_listsView\" was not injected: check your FXML file 'IPTD_Lists.fxml'.";
+		assert yearListColumn != null
+				: "fx:id=\"iptdListsColumn\" was not injected: check your FXML file 'IPTD_Lists.fxml'.";
+		assert deleteColumn != null
+				: "fx:id=\"deleteColumn\" was not injected: check your FXML file 'IPTD_Lists.fxml'.";
+		assert nyrTextField != null
+				: "fx:id=\"iptdTextField\" was not injected: check your FXML file 'IPTD_Lists.fxml'.";
 
-    @FXML
-    void handleCreateNewListPressed(ActionEvent event) {
-    	
-    	// Adding a NYR list
-    	String nyrName = nyrTextField.getText();
-    	
-    	//checking if the name is not empty
-    	if (!nyrName.isEmpty()) {
-    		
-    		NewYearsResolution newyearsresolution = new NewYearsResolution(nyrName, targetList);
-    		System.out.println(newyearsresolution);
-    		
-    		nyrList.add(newyearsresolution);
-    		
-    		System.out.println(nyrList);
-    	}
-    	
-    }
 
-    @FXML
-    void initialize() {
-    	
-        assert closeProgram != null : "fx:id=\"closeProgram\" was not injected: check your FXML file 'IPTD_Lists.fxml'.";
-        assert backButton != null : "fx:id=\"back\" was not injected: check your FXML file 'IPTD_Lists.fxml'.";
-        assert createNewList != null : "fx:id=\"createNewList\" was not injected: check your FXML file 'IPTD_Lists.fxml'.";
-        assert yearListView != null : "fx:id=\"iptd_listsView\" was not injected: check your FXML file 'IPTD_Lists.fxml'.";
-        assert yearListColumn != null : "fx:id=\"iptdListsColumn\" was not injected: check your FXML file 'IPTD_Lists.fxml'.";
-        assert deleteColumn != null : "fx:id=\"deleteColumn\" was not injected: check your FXML file 'IPTD_Lists.fxml'.";
-        assert nyrTextField != null : "fx:id=\"iptdTextField\" was not injected: check your FXML file 'IPTD_Lists.fxml'.";
+		// Should open the NewYearsResolution
 
-        //TODO: add dummies + set the delete button
-        
-        //adding a NYR List
-        createNewList.disabledProperty().and(nyrTextField.textProperty().isEmpty()); // not sure at all about (and) as for binding -> testing it!
-        
-        // NewYearsResolutions in the YearList
-        yearListView.setItems(nyrList);
-        
-        // Resolutions for each column
-        yearListColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNewYearsResolutionName()));
-        
-        // For changes (just in any case)
-        yearListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<NewYearsResolution>() {
+		// adding a NYR List
+		createNewList.disabledProperty().and(nyrTextField.textProperty().isEmpty()); // not sure at all about (and) as
+																						// for binding -> testing it!
+
+		// NewYearsResolutions in the YearList
+		yearListView.setItems(nyrList);
+
+		// Resolutions for each column
+		yearListColumn
+				.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNewYearsResolutionName()));
+
+		// For changes (just in any case)
+		yearListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<NewYearsResolution>() {
 
 			@Override
 			public void changed(ObservableValue<? extends NewYearsResolution> observable, NewYearsResolution oldValue,
 					NewYearsResolution newValue) {
-				
+
 				System.out.println("Table selection changed called: " + newValue);
 				selectedNYR_List.set(newValue);
-			
+				
+				if(newValue != null) {
+					Stage stageLists = (Stage) backButton.getScene().getWindow();
+					stageLists.close();
+
+					openScene(PERSISTANCE_NAME_NEWYEARS_RESOLUTION);
+					
+					stageLists.hide();
+				} else {
+					
+				}
+				
 			}
-			
-        });
-        
-        
-        // Delete Button for deteleColumn
-        var deleteCallBack = new Callback<TableColumn<NewYearsResolution, String>, TableCell<NewYearsResolution, String>>(){
+
+		});
+
+		
+		
+		// Setting the butto to go into the NewYearsResolution's scene
+		var enterNYR = new Callback<TableColumn<NewYearsResolution, String>, TableCell<NewYearsResolution, String>>() {
 
 			@Override
 			public TableCell<NewYearsResolution, String> call(TableColumn<NewYearsResolution, String> param) {
-				
-				TableCell<NewYearsResolution, String> cell = new TableCell<NewYearsResolution, String>(){
-					
-					Button deleteButton = new Button("Delete");
-					
+
+				TableCell<NewYearsResolution, String> cell = new TableCell<NewYearsResolution, String>() {
+
+					String name = nyrTextField.getText();
+
+					Button nyr = new Button(name);
+
 					public void updateItem(String item, boolean empty) {
-						
+						super.updateItem(item, !empty);
+						if (empty) {
+							setGraphic(null);
+							setText(null);
+						} else {
+							nyr.setOnAction(e -> {
+
+								NewYearsResolution newYR = getTableView().getItems().get(getIndex());
+								nyrList.add(getIndex(), newYR);
+
+								// opening the NewYearsResolution scene
+								Stage stageLists = (Stage) backButton.getScene().getWindow();
+								stageLists.close();
+
+								openScene(PERSISTANCE_NAME_NEWYEARS_RESOLUTION);
+								
+								stageLists.hide();
+							});
+							setGraphic(nyr);
+							setText(null);
+						}
+					}
+
+				};
+				return cell;
+			}
+
+		};
+//		yearListColumn.setCellFactory(enterNYR);
+
+		
+		
+		// Delete Button for deteleColumn
+		var deleteCallBack = new Callback<TableColumn<NewYearsResolution, String>, TableCell<NewYearsResolution, String>>() {
+
+			@Override
+			public TableCell<NewYearsResolution, String> call(TableColumn<NewYearsResolution, String> param) {
+
+				TableCell<NewYearsResolution, String> cell = new TableCell<NewYearsResolution, String>() {
+
+					Button deleteButton = new Button("Delete");
+
+					public void updateItem(String item, boolean empty) {
+
 						super.updateItem(item, empty);
-						
-						if(empty) {
+
+						if (empty) {
 							setGraphic(null);
 							setText(null);
 						} else {
@@ -176,8 +222,8 @@ public class YearList_Controller extends CommonProprietiesController {
 				};
 				return cell;
 			}
-        };
-        deleteColumn.setCellFactory(deleteCallBack);
-        
-    }
+		};
+		deleteColumn.setCellFactory(deleteCallBack);
+
+	}
 }

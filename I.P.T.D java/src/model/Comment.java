@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQuery;
 
 @Entity
 public class Comment implements Serializable {
@@ -34,6 +35,11 @@ public class Comment implements Serializable {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	@Override
+	public String toString() {
+		return "Comment id: " + id + "  text: " + text;
 	}
 	
 	

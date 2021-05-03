@@ -1,33 +1,36 @@
 package model;
 
 import java.io.Serializable;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
 
 @Entity
+@NamedQuery(name = "readAllAccounts", query = "select ac from Account ac")
 public class Account implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
 	private String account;
 	private String password;
 	private String firstName;
 	private String lastName;
 	private String gender;
 	private int age;
-	
+
 	// damit kannst du von Account auf yearList zugreifen kannst
 	@OneToOne
 	private YearList yearList;
 
-	public Account() {}
+	public Account() {
+	}
 
-	
 	public YearList getYearList() {
 		return yearList;
 	}
@@ -36,23 +39,22 @@ public class Account implements Serializable {
 		this.yearList = yearList;
 	}
 
-	public Account(String account, String password, String firstName, String lastName, String gender, int age,
-			YearList yearList) {
+	public Account(long id,String account, String password, String firstName, String lastName, String gender, int age) {
 
 		super();
+		this.id = id;
 		this.account = account;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.gender = gender;
 		this.age = age;
-		this.yearList = yearList;
-		
+
 	}
 
 	// Für die Datenbank
-	public Account(long id, String account, String password, String firstName, String lastName, String gender,
-			int age, YearList yearList) {
+	public Account(long id, String account, String password, String firstName, String lastName, String gender, int age,
+			YearList yearList) {
 		super();
 		this.id = id;
 		this.account = account;
@@ -113,5 +115,10 @@ public class Account implements Serializable {
 		this.age = age;
 	}
 
+	@Override
+	public String toString() {
+		return "Account id: " + id + "  account: " + account + "  password: " + password + "  firstName: " + firstName
+				+ "  lastName: " + lastName + "  gender: " + gender + "  age: " + age + "  yearList: " + yearList;
+	}
 	
 }

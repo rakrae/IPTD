@@ -3,24 +3,26 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+
 
 @Entity
+@NamedQuery(name = "readAllYearLists", query = "select yl from YearList yl")
 public class YearList implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	@OneToMany // 1 - N
+	@OneToMany
 	private List<NewYearsResolution> lists = new ArrayList<NewYearsResolution>();
-
+	
 	public YearList() {};
 	
 	public YearList(long id,List<NewYearsResolution> lists) {
@@ -43,13 +45,10 @@ public class YearList implements Serializable{
 		this.lists = lists;
 	}
 
-	public Account getAccount() {
-		return account;
+	@Override
+	public String toString() {
+		return "YearList id: " + id + "  lists: " + lists;
 	}
 
-	public void setAccount(Account account) {
-		this.account = account;
-	}
-	
 	
 }

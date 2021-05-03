@@ -66,32 +66,9 @@ public class EditAccountController extends CommonProprietiesController {
     	Stage stageEdit = (Stage) backButton.getScene().getWindow();
 		stageEdit.close();
 		
-		try { // Hier wird die zweite Fenster geöffnet
-
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("/application/Account.fxml"));
-
-			Parent root = (Parent) loader.load();
-
-
-			Scene scene = new Scene(root);
-			Stage stage = new Stage();
-			stage.setScene(scene);
-			
-//			stage.setOnHidden(e -> newStage.show()); // in plus
-			
-			stage.show();
-			
-			stageEdit.hide();
-			
-		 // dazu
-			
-		} catch (Exception e) {
-			System.err.println("Can not load Account");
-			e.printStackTrace();
-		}
+		openScene(PERSISTANCE_NAME_ACCOUNT);
 		
-    	
+    	stageEdit.hide();
     }
 
     @FXML

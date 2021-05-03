@@ -12,11 +12,12 @@ import model.YearList;
 public class YearListRepositoryJPA implements YearListRepository {
 	
 	private static final String PERSISTANCE_UNIT_NAME = "IPTD";
-	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("IPTD");
-	private static final EntityManager em = emf.createEntityManager();
 	
 	@Override
 	public void add(YearList yearList) {
+		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTANCE_UNIT_NAME);
+		EntityManager em = emf.createEntityManager();
 		
 		EntityTransaction et = em.getTransaction();
 		
@@ -24,18 +25,27 @@ public class YearListRepositoryJPA implements YearListRepository {
 		em.persist(yearList);
 		et.commit();
 		
+		em.close();
+		emf.close();
+		
 	}
 
 	@Override
 	public Optional<YearList> read(long id) {
 
 		YearList yearList = null;
+		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTANCE_UNIT_NAME);
+		EntityManager em = emf.createEntityManager();
+		
 		EntityTransaction et = em.getTransaction();
 		
 		et.begin();
 		yearList = em.find(YearList.class, id);
 		et.commit();
 		
+		em.close();
+		emf.close();
 		
 		return Optional.ofNullable(yearList);
 	}
@@ -43,12 +53,18 @@ public class YearListRepositoryJPA implements YearListRepository {
 	@Override
 	public List<YearList> readAll() {
 		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTANCE_UNIT_NAME);
+		EntityManager em = emf.createEntityManager();
+		
 		EntityTransaction et = em.getTransaction();
 		
 		et.begin();
+		@SuppressWarnings("unchecked")
 		List<YearList> yearLists = (List<YearList>) em.createQuery("SELECT y FROM YearList y").getResultList();
 		et.commit();
 		
+		em.close();
+		emf.close();
 		
 		return yearLists;
 	}
@@ -56,23 +72,35 @@ public class YearListRepositoryJPA implements YearListRepository {
 	@Override
 	public YearList updateList(YearList yearList) {
 		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTANCE_UNIT_NAME);
+		EntityManager em = emf.createEntityManager();
+		
 		EntityTransaction et = em.getTransaction();
 		
 		et.begin();
 		YearList mergedYearList = em.merge(yearList);
 		et.commit();
 		
-		return yearList;
+		em.close();
+		emf.close();
+		
+		return mergedYearList;
 	}
 
 	@Override
 	public void delete(YearList yearList) {
+		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTANCE_UNIT_NAME);
+		EntityManager em = emf.createEntityManager();
 		
 		EntityTransaction et = em.getTransaction();
 		
 		et.begin();
 		em.remove(yearList);
 		et.commit();
+		
+		em.close();
+		emf.close();
 		
 	}
 

@@ -3,6 +3,7 @@ package controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,8 +12,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import model.Account;
 
 public class AccountController extends CommonProprietiesController {
 
@@ -64,34 +66,12 @@ public class AccountController extends CommonProprietiesController {
     	Stage stageBack = (Stage) backButton.getScene().getWindow();
 		stageBack.close();
 		
-		try { // Hier wird die zweite Fenster geöffneta
-
-
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("/application/Login.fxml"));
-
-			Parent root = (Parent) loader.load();
-
-
-			Scene scene = new Scene(root);
-			Stage stage = new Stage();
-			stage.setScene(scene);
-						
-			stage.show();
-			
-			stageBack.hide();
-			
-		 // dazu hier
-			
-			
-		} catch (Exception e) {
-			System.err.println("Can not load Account");
-			e.printStackTrace();
-		}
+		openScene(PERSISTANCE_NAME_LOGIN);
 		
+		stageBack.hide();
     }
 
-    @FXML
+	@FXML
     void handleClosePressed(ActionEvent event) {
 
     	System.exit(0);
@@ -101,13 +81,12 @@ public class AccountController extends CommonProprietiesController {
     @FXML
     void handleDeleteAccountPressed(ActionEvent event) {
     	
+    	Account account = selectedAccount.get();
     	
-		/*
-		 * 
-		 * 
-		 * 
-		 */
-
+    	accountList.remove(account);
+    	
+    	accountRepository.delete(account);
+    	
     }
 
     @FXML
@@ -116,35 +95,11 @@ public class AccountController extends CommonProprietiesController {
     	Stage newStage = (Stage) editAccountButton.getScene().getWindow();
 		newStage.close();
     	
-		try { // Hier wird die zweite Fenster geöffnet
-
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("/application/EditAccount.fxml"));
-
-			Parent root = (Parent) loader.load();
-			
-			
-			EditAccountController ctr = loader.getController(); 	
-											
-
-			Scene scene = new Scene(root);
-			Stage stage = new Stage();
-			stage.setScene(scene);
-			
-//			stage.setOnHidden(e -> newStage.show()); // in plus
-			
-			newStage.hide();
-			
-			stage.show();
-			
-			
-			
-		} catch (Exception e) {
-			System.err.println("Can not load New Account");
-			e.printStackTrace();
-		}
+//		openScene(PERSISTANCE_NAME_EDIT_ACCOUNT);
     	
-    	
+		openSceneOnHidden(PERSISTANCE_NAME_EDIT_ACCOUNT, newStage);
+		
+    	newStage.hide();
     	
     }
 
@@ -154,35 +109,11 @@ public class AccountController extends CommonProprietiesController {
     	Stage newStage = (Stage) editAccountButton.getScene().getWindow();
 		newStage.close();
     	
-		try { // Hier wird die zweite Fenster geöffnet
-
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("/application/YearList.fxml"));
-
-			Parent root = (Parent) loader.load();
-
-			YearList_Controller ctr = loader.getController(); 	
-													
-							
-
-			Scene scene = new Scene(root);
-			Stage stage = new Stage();
-			stage.setScene(scene);
-			
-//			stage.setOnHidden(e -> newStage.show()); // in plus
-			
-			stage.show();
-			
-			newStage.hide();
-			
-		 // dazu
-			
-		} catch (Exception e) {
-			System.err.println("Can not load YearList");
-			e.printStackTrace();
-		}
+//		openScene(PERSISTANCE_NAME_YEARLIST);
+		
+		openSceneOnHidden(PERSISTANCE_NAME_YEARLIST, newStage);
     	
-
+		newStage.hide();
     }
 
     @FXML

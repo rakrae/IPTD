@@ -7,6 +7,8 @@ module I.P.T.D {
 	requires eclipselink;
 	requires jakarta.persistence;
 	requires org.apache.derby.engine;
+	requires org.junit.jupiter.api;
+	requires junit;
 	
 	opens model to eclipselink;
 	opens controller to javafx.fxml;

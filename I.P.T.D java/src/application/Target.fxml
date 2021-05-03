@@ -37,7 +37,7 @@
          <bottom>
             <VBox spacing="20.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="targetAchieved" mnemonicParsing="false" onAction="#handleTargetAchievedPressed" prefHeight="25.0" prefWidth="189.0" style="-fx-background-color: #ffffff;" text="Target achieved">
+                  <Button fx:id="targetAchieved" mnemonicParsing="false" onAction="#handleTargetAchievedPressed" prefHeight="25.0" prefWidth="189.0" style="-fx-background-color: #0cff08;" text="Target achieved">
                      <VBox.margin>
                         <Insets bottom="-20.0" left="170.0" top="10.0" />
                      </VBox.margin>
@@ -45,7 +45,7 @@
                         <Font name="Arial Bold" size="13.0" />
                      </font>
                   </Button>
-                  <Button fx:id="targetFailed" mnemonicParsing="false" onAction="#handleTargetFailedPressed" prefHeight="25.0" prefWidth="189.0" style="-fx-background-color: #ffffff;" text="Target failed">
+                  <Button fx:id="targetFailed" mnemonicParsing="false" onAction="#handleTargetFailedPressed" prefHeight="25.0" prefWidth="189.0" style="-fx-background-color: #ff0000;" text="Target failed">
                      <VBox.margin>
                         <Insets bottom="-70.0" left="170.0" top="10.0" />
                      </VBox.margin>
@@ -106,8 +106,8 @@
                <children>
                   <TableView fx:id="commentsTableView" opacity="0.7" prefHeight="310.0" prefWidth="428.0">
                     <columns>
-                      <TableColumn fx:id="commentColumn" prefWidth="332.0" text="Comment" />
-                      <TableColumn fx:id="editColumn" minWidth="100.0" prefWidth="85.0" text="Edit" />
+                      <TableColumn fx:id="commentColumn" prefWidth="367.0" text="Comment" />
+                      <TableColumn fx:id="editColumn" minWidth="46.0" prefWidth="60.0" text="Edit" />
                     </columns>
                      <VBox.margin>
                         <Insets bottom="30.0" left="50.0" right="50.0" top="50.0" />

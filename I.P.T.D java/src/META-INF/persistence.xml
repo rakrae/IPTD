@@ -11,7 +11,13 @@
 			<property name="jakarta.persistence.jdbc.url" value="jdbc:derby:IPTD; create=true"/>
 			<property name="jakarta.persistence.jdbc.user" value="Adi"/>
 			<property name="jakarta.persistence.jdbc.password" value="test"/>
-			<property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/> <!-- drop-and-create erstellt beim Start eine neue DB - development  -->
+			
+			<!-- property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"  
+			
+			Ich habe als erstes das drop-and-create benutzt und deswegen habe ich es nicht bekommen
+			
+			drop-and-create erstellt beim Start eine neue DB - development  -->
+			
 			<property name="jakarta.persistence.schema-generation.database.action" value="none"/> <!-- none - production  -->
 			<property name="eclipselink.logging.level.sql" value="FINE" />
 		</properties>

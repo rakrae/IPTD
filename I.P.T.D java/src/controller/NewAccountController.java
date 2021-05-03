@@ -13,6 +13,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Account;
+import repository.AccountRepositoryJPA;
 
 public class NewAccountController extends CommonProprietiesController {
 
@@ -55,50 +57,59 @@ public class NewAccountController extends CommonProprietiesController {
     	Stage stageLogin = (Stage) cancelCreate.getScene().getWindow();
 		stageLogin.close();
     	
-		try { // Hier wird die zweite Fenster geöffnet
-
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("/application/Login.fxml"));
-
-			Parent root = (Parent) loader.load();
-
-
-			Scene scene = new Scene(root);
-			Stage stage = new Stage();
-			stage.setScene(scene);
-			
-//			stage.setOnHidden(e -> newStage.show()); // in plus
-			
-			stage.show();
-			
-			stageLogin.hide();
-			
-		 // dazu
-			
-		} catch (Exception e) {
-			System.err.println("Can not load Login");
-			e.printStackTrace();
-		}
+		openScene(PERSISTANCE_NAME_LOGIN);
 		
-		
+		System.out.println(accountList);
+		stageLogin.close();
     }
 
+    // Creating a new account
     @FXML
     void handleCreateAccountPressed(ActionEvent event) {
     	
-    	createAccount.setOnAction(e -> {
-    		ModalDialog dialog = new ModalDialog();
-    		Optional<ButtonType> result = dialog.showAndWait();
-    		if(result.isPresent()) {
-    			if(result.get() == ButtonType.OK) {
-    				System.out.println("Dialog ok");
-    			} else {
-    				System.out.println("Dialog cancel");
-    			}
-    		}
-    	});
+    	String account = accountTextField.getText();
+    	String password = passwordTextField.getText();
+    	String rePassword = reenterPasswordTextField.getText();
+    	String firstName = firstNameTextField.getText();
+    	String lastName = lastNameTextField.getText();
+    	String gender = genderTextField.getText();
+    	String ageString = ageTextField.getText();
+    	int age = Integer.parseInt(ageString);
+    	
+    	if(!account.isEmpty() && !password.isEmpty() && password.equals(rePassword) && !firstName.isEmpty() && !lastName.isEmpty() && !gender.isEmpty() && age != 0 && age > 7){
+    		Account newAccount = new Account(0l,account, password, firstName, lastName, gender, age);
+    		
+    		System.out.println(accountList);
+    		// Adding the new account 
+    		accountList.add(newAccount);
+    		accountRepository.add(newAccount);
+    		
+    		System.out.println(accountList);
+    			
+    			
+        		ModalDialog dialog = new ModalDialog();
+        		Optional<ButtonType> result = dialog.showAndWait();
+        		if(result.isPresent()) {
+        			if(result.get() == ButtonType.OK) {
+        				System.out.println("Dialog ok");
+        				
+        				Stage stageLogin = (Stage) cancelCreate.getScene().getWindow();
+        				stageLogin.close();
+        				
+        				openScene(PERSISTANCE_NAME_LOGIN);
+        				
+        				stageLogin.close();
+        			} else {
+        				System.out.println("Dialog cancel");
+        			}
+        		}
+
+    		
+    	}
 
     }
+    
+    
 
     @FXML
     void initialize() {

@@ -3,6 +3,10 @@ package controller;
 import java.awt.DisplayMode;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -56,35 +60,16 @@ public class LoginController extends CommonProprietiesController {
     	 * für die korretheit der Daten
     	 * 
     	 */
+    	String PERSISTANCE_UNIT_NAME = "IPTD";
+    	EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTANCE_UNIT_NAME);
+    	EntityManager em = emf.createEntityManager();
+    	
+    	accountRepository.readAll();
     	
     	
-    	try { // Hier wird die zweite Fenster geöffnet
-
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("/application/Account.fxml"));
-
-			Parent root = (Parent) loader.load();
-
-			
-			AccountController ctr = loader.getController(); 	
-													
-			Scene scene = new Scene(root);
-			Stage stage = new Stage();
-			stage.setScene(scene);
-			
-//			stage.setOnHidden(e -> primaryStage.show()); // in plus
-			
-			stage.show();
-			
-			primaryStage.hide();
-				
-			
-		} catch (Exception e) {
-			System.err.println("Can not load Account");
-			e.printStackTrace();
-		}
+    	openScene(PERSISTANCE_NAME_ACCOUNT);
     	
-    	
+    	primaryStage.hide();
     	
     }
 
@@ -94,32 +79,9 @@ public class LoginController extends CommonProprietiesController {
     	Stage primaryStage = (Stage) passwordTextField.getScene().getWindow();
     	primaryStage.close();
     	
-    	try { // Hier wird die zweite Fenster geöffnet
-
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("/application/NewAccount.fxml"));
-
-			Parent root = (Parent) loader.load();
-
-			NewAccountController ctr = loader.getController(); 	
-													
-							
-
-			Scene scene = new Scene(root);
-			Stage stage = new Stage();
-			stage.setScene(scene);
-			
-//			stage.setOnHidden(e -> primaryStage.show()); // in plus
-			
-			stage.show();
-			
-			primaryStage.hide(); // dazu
-			
-		} catch (Exception e) {
-			System.err.println("Can not load New Account");
-			e.printStackTrace();
-		}
+    	openScene(PERSISTANCE_NAME_NEW_ACCOUNT);
     	
+    	primaryStage.hide();
     }
 
     @FXML
@@ -131,4 +93,6 @@ public class LoginController extends CommonProprietiesController {
         assert newAccount != null : "fx:id=\"newAccount\" was not injected: check your FXML file 'Login.fxml'.";
 
     }
+    
+    
 }

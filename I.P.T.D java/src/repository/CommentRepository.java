@@ -11,7 +11,7 @@ public interface CommentRepository {
 	
 	Optional<Comment> read(long id);
 	
-	List<Comment> readlAdd();
+	List<Comment> readAll();
 	
 	Comment updateComment(Comment comment);
 	

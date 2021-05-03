@@ -21,7 +21,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/bihun/Library/javafx-sdk-15.0.1/lib/javafx.base.jar" rootpath="." sourcepath="C:/Users/bihun/Library/javafx-sdk-15.0.1/lib/src.zip">
+	<classpathentry kind="lib" path="C:/Users/bihun/Library/javafx-sdk-15.0.1/lib/javafx.base.jar" sourcepath="C:/Users/bihun/Library/javafx-sdk-15.0.1/lib/src.zip">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
@@ -51,7 +51,7 @@
 			<accessrule kind="discouraged" pattern="netscape/javascript/*"/>
 		</accessrules>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/bihun/Library/javafx-sdk-15.0.1/lib/javafx.controls.jar" rootpath="." sourcepath="C:/Users/bihun/Library/javafx-sdk-15.0.1/lib/src.zip">
+	<classpathentry kind="lib" path="C:/Users/bihun/Library/javafx-sdk-15.0.1/lib/javafx.controls.jar" sourcepath="C:/Users/bihun/Library/javafx-sdk-15.0.1/lib/src.zip">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
@@ -60,6 +60,11 @@
 			<accessrule kind="discouraged" pattern="com/sun/*"/>
 			<accessrule kind="discouraged" pattern="netscape/javascript/*"/>
 		</accessrules>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

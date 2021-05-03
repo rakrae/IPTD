@@ -66,8 +66,8 @@
                <children>
                   <TableView fx:id="yearListView" opacity="0.7" prefHeight="310.0" prefWidth="428.0">
                     <columns>
-                      <TableColumn fx:id="yearListColumn" prefWidth="332.0" text="I.P.T.D Lists" />
-                      <TableColumn fx:id="deleteColumn" minWidth="100.0" prefWidth="85.0" text="Delete" />
+                      <TableColumn fx:id="yearListColumn" prefWidth="372.0" text="I.P.T.D Lists" />
+                      <TableColumn fx:id="deleteColumn" minWidth="46.0" prefWidth="60.0" text="Delete" />
                     </columns>
                      <VBox.margin>
                         <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />

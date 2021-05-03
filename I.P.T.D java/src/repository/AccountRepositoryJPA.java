@@ -1,30 +1,35 @@
 package repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import controller.CommonProprietiesController;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 import model.Account;
 
 public class AccountRepositoryJPA implements AccountRepository {
 
 	private static final String PERSISTANCE_UNIT_NAME = "IPTD";
-	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTANCE_UNIT_NAME);
-	private static final EntityManager em = emf.createEntityManager();
 
 	@Override
 	public void add(Account account) {
-
+		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTANCE_UNIT_NAME);
+		EntityManager em = emf.createEntityManager();
+		
 		EntityTransaction et = em.getTransaction();
 
 		et.begin();
 		em.persist(account);
 		et.commit();
 
+		em.close();
+		emf.close();
+		
 		System.out.println("Account added");
 
 	}
@@ -33,12 +38,19 @@ public class AccountRepositoryJPA implements AccountRepository {
 	public Optional<Account> read(long id) {
 
 		Account accountAC = null;
+		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTANCE_UNIT_NAME);
+		EntityManager em = emf.createEntityManager();
+	
 		EntityTransaction et = em.getTransaction();
 
 		et.begin();
 		accountAC = em.find(Account.class, id);
 		et.commit();
-
+		
+		em.close();
+		emf.close();
+		
 		System.out.println("Account read");
 
 		return Optional.ofNullable(accountAC);
@@ -46,13 +58,21 @@ public class AccountRepositoryJPA implements AccountRepository {
 
 	@Override
 	public List<Account> readAll() {
+		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTANCE_UNIT_NAME);
+		EntityManager em = emf.createEntityManager();
 
 		EntityTransaction et = em.getTransaction();
 
 		System.out.println("Read all Accounts");
+		
 		et.begin();
+		@SuppressWarnings("unchecked")
 		List<Account> accounts = (List<Account>) em.createQuery("SELECT a FROM Account a").getResultList();
 		et.commit();
+		
+		em.close();
+		emf.close();
 		
 		return accounts;
 	}
@@ -60,24 +80,39 @@ public class AccountRepositoryJPA implements AccountRepository {
 	@Override
 	public Account updateAccount(Account account) {
 
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTANCE_UNIT_NAME);
+		EntityManager em = emf.createEntityManager();
+		
+		
 		EntityTransaction et = em.getTransaction();
 
 		et.begin();
 		Account mergedAccount = em.merge(account);
 		et.commit();
 
+		em.close();
+		emf.close();
+		
 		return mergedAccount;
 	}
 
 	@Override
 	public void delete(Account account) {
 		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTANCE_UNIT_NAME);
+		EntityManager em = emf.createEntityManager();
+		
 		EntityTransaction et = em.getTransaction();
 		
 		et.begin();
+		if(!em.contains(account)) {
+			account = em.merge(account);
+		}
 		em.remove(account);
 		et.commit();
 		
+		em.close();
+		emf.close();
 	}
 
 }

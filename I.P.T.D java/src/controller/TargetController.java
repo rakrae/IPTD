@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 import model.Comment;
 import model.Target;
 
@@ -66,6 +67,7 @@ public class TargetController extends CommonProprietiesController{
     		System.out.println(comment);
     		
     		commentList.add(comment);
+    		commentRepository.add(comment);
     		
     		System.out.println(commentList);
     		
@@ -76,7 +78,13 @@ public class TargetController extends CommonProprietiesController{
 
     @FXML
     void handleBackPressed(ActionEvent event) {
-
+    	
+    	Stage sceneT = (Stage) back.getScene().getWindow();
+    	sceneT.close();
+    	
+    	openScene(PERSISTANCE_NAME_NEWYEARS_RESOLUTION);
+    	
+    	sceneT.hide();
     }
 
     @FXML
