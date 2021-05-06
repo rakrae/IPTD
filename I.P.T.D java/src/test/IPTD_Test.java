@@ -51,7 +51,7 @@ class IPTD_Test {
 		
 		LoginController lc = new LoginController();
 		
-		ModalDialog md = new ModalDialog();
+		ModalDialog md = new ModalDialog(null, null);
 		
 		NewAccountController nac = new NewAccountController();
 		

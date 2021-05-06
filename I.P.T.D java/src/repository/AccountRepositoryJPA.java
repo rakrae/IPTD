@@ -67,8 +67,11 @@ public class AccountRepositoryJPA implements AccountRepository {
 		System.out.println("Read all Accounts");
 		
 		et.begin();
-		@SuppressWarnings("unchecked")
-		List<Account> accounts = (List<Account>) em.createQuery("SELECT a FROM Account a").getResultList();
+		List<Account> accounts = new ArrayList<>();
+		
+		TypedQuery<Account> query = em.createNamedQuery("readAllAccounts", Account.class);
+		accounts = query.getResultList();
+		
 		et.commit();
 		
 		em.close();
@@ -104,6 +107,7 @@ public class AccountRepositoryJPA implements AccountRepository {
 		
 		EntityTransaction et = em.getTransaction();
 		
+		System.out.println("Delete account: " + account.getId());
 		et.begin();
 		if(!em.contains(account)) {
 			account = em.merge(account);

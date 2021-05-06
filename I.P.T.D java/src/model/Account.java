@@ -1,22 +1,31 @@
 package model;
 
 import java.io.Serializable;
+
+import jakarta.persistence.Access;
+import jakarta.persistence.AccessType;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
+
 
 @Entity
+@Access(AccessType.PROPERTY)
 @NamedQuery(name = "readAllAccounts", query = "select ac from Account ac")
 public class Account implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	
+	private LongProperty id = new SimpleLongProperty();
 
+	@Column(nullable = false, unique = true)
 	private String account;
 	private String password;
 	private String firstName;
@@ -25,10 +34,13 @@ public class Account implements Serializable {
 	private int age;
 
 	// damit kannst du von Account auf yearList zugreifen kannst
-	@OneToOne
+	@OneToOne(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private YearList yearList;
 
 	public Account() {
+		
+		this.id = new SimpleLongProperty();
+	
 	}
 
 	public YearList getYearList() {
@@ -42,7 +54,7 @@ public class Account implements Serializable {
 	public Account(long id,String account, String password, String firstName, String lastName, String gender, int age) {
 
 		super();
-		this.id = id;
+		this.id = new SimpleLongProperty(id);
 		this.account = account;
 		this.password = password;
 		this.firstName = firstName;
@@ -56,7 +68,7 @@ public class Account implements Serializable {
 	public Account(long id, String account, String password, String firstName, String lastName, String gender, int age,
 			YearList yearList) {
 		super();
-		this.id = id;
+		this.id = new SimpleLongProperty(id);
 		this.account = account;
 		this.password = password;
 		this.firstName = firstName;
@@ -65,6 +77,16 @@ public class Account implements Serializable {
 		this.age = age;
 		this.yearList = yearList;
 
+	}
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public long getId() {
+		return this.id.get();
+	}
+
+	public void setId(long id) {
+		this.id.set(id);;
 	}
 
 	public String getAccount() {
@@ -120,5 +142,6 @@ public class Account implements Serializable {
 		return "Account id: " + id + "  account: " + account + "  password: " + password + "  firstName: " + firstName
 				+ "  lastName: " + lastName + "  gender: " + gender + "  age: " + age + "  yearList: " + yearList;
 	}
+
 	
 }

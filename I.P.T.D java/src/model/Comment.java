@@ -8,7 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQuery;
 
-@Entity
+@Entity(name = "Comment")
+@NamedQuery(name = "readAllComments", query = "select co from Comment co")
 public class Comment implements Serializable {
 	
 	@Id

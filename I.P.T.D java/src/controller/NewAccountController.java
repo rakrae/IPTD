@@ -1,24 +1,24 @@
 package controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Account;
-import repository.AccountRepositoryJPA;
+import model.NewYearsResolution;
+import model.YearList;
+
 
 public class NewAccountController extends CommonProprietiesController {
 
-    @FXML
+	@FXML
     private ResourceBundle resources;
 
     @FXML
@@ -67,6 +67,8 @@ public class NewAccountController extends CommonProprietiesController {
     @FXML
     void handleCreateAccountPressed(ActionEvent event) {
     	
+    	
+    	
     	String account = accountTextField.getText();
     	String password = passwordTextField.getText();
     	String rePassword = reenterPasswordTextField.getText();
@@ -76,7 +78,7 @@ public class NewAccountController extends CommonProprietiesController {
     	String ageString = ageTextField.getText();
     	int age = Integer.parseInt(ageString);
     	
-    	if(!account.isEmpty() && !password.isEmpty() && password.equals(rePassword) && !firstName.isEmpty() && !lastName.isEmpty() && !gender.isEmpty() && age != 0 && age > 7){
+    	if(!account.isEmpty() && !password.isEmpty() && password.equals(rePassword) && !firstName.isEmpty() && !lastName.isEmpty() && !gender.isEmpty() && age != 0 && age > 0){
     		Account newAccount = new Account(0l,account, password, firstName, lastName, gender, age);
     		
     		System.out.println(accountList);
@@ -86,8 +88,10 @@ public class NewAccountController extends CommonProprietiesController {
     		
     		System.out.println(accountList);
     			
+    			String first = "Account Succesfully created!";
+    			String second = "Press ok and login";
     			
-        		ModalDialog dialog = new ModalDialog();
+        		ModalDialog dialog = new ModalDialog(first, second);
         		Optional<ButtonType> result = dialog.showAndWait();
         		if(result.isPresent()) {
         			if(result.get() == ButtonType.OK) {
@@ -103,7 +107,7 @@ public class NewAccountController extends CommonProprietiesController {
         				System.out.println("Dialog cancel");
         			}
         		}
-
+    	} else {
     		
     	}
 

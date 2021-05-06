@@ -111,7 +111,7 @@ public class YearList_Controller extends CommonProprietiesController {
 		// Should open the NewYearsResolution
 
 		// adding a NYR List
-		createNewList.disabledProperty().and(nyrTextField.textProperty().isEmpty()); // not sure at all about (and) as
+		createNewList.disableProperty().bind(nyrTextField.textProperty().isEmpty()); // not sure at all about (and) as
 																						// for binding -> testing it!
 
 		// NewYearsResolutions in the YearList
@@ -147,52 +147,6 @@ public class YearList_Controller extends CommonProprietiesController {
 		});
 
 		
-		
-		// Setting the butto to go into the NewYearsResolution's scene
-		var enterNYR = new Callback<TableColumn<NewYearsResolution, String>, TableCell<NewYearsResolution, String>>() {
-
-			@Override
-			public TableCell<NewYearsResolution, String> call(TableColumn<NewYearsResolution, String> param) {
-
-				TableCell<NewYearsResolution, String> cell = new TableCell<NewYearsResolution, String>() {
-
-					String name = nyrTextField.getText();
-
-					Button nyr = new Button(name);
-
-					public void updateItem(String item, boolean empty) {
-						super.updateItem(item, !empty);
-						if (empty) {
-							setGraphic(null);
-							setText(null);
-						} else {
-							nyr.setOnAction(e -> {
-
-								NewYearsResolution newYR = getTableView().getItems().get(getIndex());
-								nyrList.add(getIndex(), newYR);
-
-								// opening the NewYearsResolution scene
-								Stage stageLists = (Stage) backButton.getScene().getWindow();
-								stageLists.close();
-
-								openScene(PERSISTANCE_NAME_NEWYEARS_RESOLUTION);
-								
-								stageLists.hide();
-							});
-							setGraphic(nyr);
-							setText(null);
-						}
-					}
-
-				};
-				return cell;
-			}
-
-		};
-//		yearListColumn.setCellFactory(enterNYR);
-
-		
-		
 		// Delete Button for deteleColumn
 		var deleteCallBack = new Callback<TableColumn<NewYearsResolution, String>, TableCell<NewYearsResolution, String>>() {
 
@@ -214,6 +168,7 @@ public class YearList_Controller extends CommonProprietiesController {
 							deleteButton.setOnAction(e -> {
 								NewYearsResolution nyr = getTableView().getItems().get(getIndex());
 								nyrList.remove(nyr);
+								nyrRepository.delete(nyr);
 							});
 							setGraphic(deleteButton);
 							setText(null);

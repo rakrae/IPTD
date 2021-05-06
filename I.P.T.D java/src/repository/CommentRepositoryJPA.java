@@ -1,11 +1,13 @@
 package repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 import model.Comment;
 
 public class CommentRepositoryJPA implements CommentRepository{
@@ -63,8 +65,11 @@ public class CommentRepositoryJPA implements CommentRepository{
 		System.out.println("Read all comments");
 		
 		et.begin();
-		@SuppressWarnings("unchecked")
-		List<Comment> comments =(List<Comment>) em.createQuery("SELECT c FROM Comment c").getResultList();
+		List<Comment> comments = new ArrayList<>();
+		
+		TypedQuery<Comment> query = em.createNamedQuery("readAllComments", Comment.class);
+		comments = query.getResultList();
+		
 		et.commit();
 		
 		em.close();

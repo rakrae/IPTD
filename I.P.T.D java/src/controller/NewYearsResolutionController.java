@@ -63,7 +63,7 @@ public class NewYearsResolutionController extends CommonProprietiesController {
 
 		if (!target_Text.isEmpty()) {
 
-			Target target = new Target();
+			Target target = new Target(target_Text, commentList);
 			System.out.println(target);
 
 			targetList.add(target);
@@ -104,8 +104,10 @@ public class NewYearsResolutionController extends CommonProprietiesController {
 		assert deleteColumn != null : "fx:id=\"deleteColumn\" was not injected: check your FXML file 'IPTD_List.fxml'.";
 		assert targetTextField != null
 				: "fx:id=\"targetTextField\" was not injected: check your FXML file 'IPTD_List.fxml'.";
-
-		// TODO: add dummies + set the delete button
+		
+		// Sets NYR's name
+		NewYearsResolution nyrName = selectedNYR_List.get();
+		titleIPTDList.setText(nyrName.getNewYearsResolutionName());
 
 		// adding a target
 		addNewTarget.disabledProperty().and(targetTextField.textProperty().isEmpty());
@@ -124,6 +126,17 @@ public class NewYearsResolutionController extends CommonProprietiesController {
 
 				System.out.println("Table selection called: " + newValue);
 				selectedTarget.set(newValue);
+				
+				if(newValue != null) {
+					Stage stageLists = (Stage) back.getScene().getWindow();
+					stageLists.close();
+
+					openScene(PERSISTANCE_NAME_TARGET);
+					
+					stageLists.hide();
+				} else {
+					
+				}
 
 			}
 		});
@@ -169,7 +182,7 @@ public class NewYearsResolutionController extends CommonProprietiesController {
 			}
 
 		};
-		targetColumn.setCellFactory(enterNYR);
+//		targetColumn.setCellFactory(enterNYR);
 		
 		
 

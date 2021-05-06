@@ -5,6 +5,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,7 +13,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 
-@Entity
+@Entity(name = "Target")
+@NamedQuery(name = "readAllTargets", query = "select t from Target t")
 public class Target implements Serializable {
 
 	@Id
@@ -20,7 +22,7 @@ public class Target implements Serializable {
 	private long id;
 	private String targetName;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Comment> comments;
 
 	public Target() {
@@ -51,7 +53,7 @@ public class Target implements Serializable {
 	public void addComment(String addComment) {
 
 	}
-
+	
 	public List<Comment> getComments() {
 		return comments;
 	}

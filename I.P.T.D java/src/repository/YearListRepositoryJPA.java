@@ -1,5 +1,6 @@
 package repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 import model.YearList;
 
 public class YearListRepositoryJPA implements YearListRepository {
@@ -59,8 +61,11 @@ public class YearListRepositoryJPA implements YearListRepository {
 		EntityTransaction et = em.getTransaction();
 		
 		et.begin();
-		@SuppressWarnings("unchecked")
-		List<YearList> yearLists = (List<YearList>) em.createQuery("SELECT y FROM YearList y").getResultList();
+		List<YearList> yearLists = new ArrayList<>();
+		
+		TypedQuery<YearList> query = em.createNamedQuery("readAllYearLists", YearList.class);
+		yearLists = query.getResultList();
+		
 		et.commit();
 		
 		em.close();

@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="model.Account" project="I.P.T.D java" file="/I.P.T.D java/src/model/Account.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="245" y="310"/>    
+    <position height="-1" width="-1" x="236" y="323"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,7 +39,7 @@
   </class>  
   <class id="5" language="java" name="model.NewYearsResolution" project="I.P.T.D java" 
     file="/I.P.T.D java/src/model/NewYearsResolution.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="551" y="271"/>    
+    <position height="-1" width="-1" x="1439" y="350"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,7 +48,7 @@
   </class>  
   <class id="6" language="java" name="model.Target" project="I.P.T.D java" file="/I.P.T.D java/src/model/Target.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="784" y="310"/>    
+    <position height="-1" width="-1" x="579" y="344"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -57,20 +57,37 @@
   </class>  
   <class id="7" language="java" name="model.YearList" project="I.P.T.D java" 
     file="/I.P.T.D java/src/model/YearList.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="553" y="484"/>    
+    <position height="-1" width="-1" x="1138" y="337"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="8">    
+  <class id="8" language="java" name="model.Comment" project="I.P.T.D java" file="/I.P.T.D java/src/model/Comment.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="838" y="461"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="9">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="10" name="comments"/>      
+      <multiplicity id="11" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="12">    
     <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="9" name="lists">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <attribute id="13" name="lists">        
+        <position height="0" width="0" x="888" y="79"/>      
       </attribute>      
-      <multiplicity id="10" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <multiplicity id="14" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="888" y="79"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    

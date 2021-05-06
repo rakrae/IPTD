@@ -6,6 +6,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,6 +14,7 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 
 @Entity
+@NamedQuery(name = "readAllNYRResolutions", query = "select nyr from NewYearsResolution nyr")
 public class NewYearsResolution implements Serializable{
 	
 	@Id
@@ -20,7 +22,7 @@ public class NewYearsResolution implements Serializable{
 	private long id;
 	private String newYearsResolutionName;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Target> targets = new ArrayList<>();
 	
 	public NewYearsResolution() {}
@@ -46,6 +48,7 @@ public class NewYearsResolution implements Serializable{
 		this.newYearsResolutionName = nyrName;
 	}
 
+	
 	public List<Target> getTargets() {
 		return targets;
 	}

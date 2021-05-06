@@ -1,24 +1,23 @@
 package controller;
 
 import java.net.URL;
+import java.util.ListIterator;
 import java.util.ResourceBundle;
+
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import model.Account;
+import model.YearList;
 
 public class AccountController extends CommonProprietiesController {
 
-    @FXML
+	@FXML
     private ResourceBundle resources;
 
     @FXML
@@ -79,13 +78,26 @@ public class AccountController extends CommonProprietiesController {
     }
 
     @FXML
-    void handleDeleteAccountPressed(ActionEvent event) {
+    void handleDeleteAccountPressed(ActionEvent event){
     	
-    	Account account = selectedAccount.get();
+    	Stage loginScene = (Stage) deleteButton.getScene().getWindow();
+    	loginScene.close();
     	
-    	accountList.remove(account);
+    	Account account = selectedAccount.getValue();
     	
-    	accountRepository.delete(account);
+    	// Delete account
+    	try {
+        	accountRepository.delete(account);
+        	accountList.remove(account);
+        	openScene(PERSISTANCE_NAME_LOGIN);
+        } catch(NullPointerException e)
+            {
+        	e.printStackTrace();
+            System.out.print("Could not delete account!");
+            accountList.remove(account);
+            openScene(PERSISTANCE_NAME_LOGIN);
+        }
+    	loginScene.hide();
     	
     }
 
@@ -94,9 +106,7 @@ public class AccountController extends CommonProprietiesController {
 
     	Stage newStage = (Stage) editAccountButton.getScene().getWindow();
 		newStage.close();
-    	
-//		openScene(PERSISTANCE_NAME_EDIT_ACCOUNT);
-    	
+
 		openSceneOnHidden(PERSISTANCE_NAME_EDIT_ACCOUNT, newStage);
 		
     	newStage.hide();
@@ -108,9 +118,7 @@ public class AccountController extends CommonProprietiesController {
     	
     	Stage newStage = (Stage) editAccountButton.getScene().getWindow();
 		newStage.close();
-    	
-//		openScene(PERSISTANCE_NAME_YEARLIST);
-		
+
 		openSceneOnHidden(PERSISTANCE_NAME_YEARLIST, newStage);
     	
 		newStage.hide();
@@ -130,6 +138,43 @@ public class AccountController extends CommonProprietiesController {
         assert closeButton != null : "fx:id=\"closeButton\" was not injected: check your FXML file 'Account.fxml'.";
         assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'Account.fxml'.";
         assert deleteButton != null : "fx:id=\"deleteButton\" was not injected: check your FXML file 'Account.fxml'.";
+        
+        // Setting the names for the account profile
+        Account currentAccount = selectedAccount.get();
+        titleFirstNameText.setText(currentAccount.getFirstName());
+        titleAccountText.setText(currentAccount.getAccount());
+        accountText.setText(currentAccount.getAccount());
+        firstNameText.setText(currentAccount.getFirstName());
+        lastNameText.setText(currentAccount.getLastName());
+        
+        
+        accountList.addListener(new ListChangeListener<Account>() {
 
+			@Override
+			public void onChanged(Change<? extends Account> c) {
+				
+				while(c.next()) {
+					
+					if(c.wasRemoved()) {
+						for(Account ac : c.getRemoved()) {
+							
+							ListIterator<YearList> itr = yearList.listIterator();
+							
+							while(itr.hasNext()) {
+								
+								YearList y = itr.next();
+								if(y.getLists().equals(ac)) {
+									itr.remove();
+								}
+							}
+						}
+					}
+					
+				}
+			}
+        	
+        });
+        
+        
     }
 }

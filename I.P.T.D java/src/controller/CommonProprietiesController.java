@@ -26,8 +26,8 @@ import repository.TargetRepository;
 import repository.TargetRepositoryJPA;
 
 // in order for the other controllers to use the modal dialog and its methods it extends the ModalDialog class
-public class CommonProprietiesController extends ModalDialog {
-	
+public class CommonProprietiesController {
+
 	// it 
 	static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 

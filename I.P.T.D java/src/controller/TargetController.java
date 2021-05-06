@@ -2,20 +2,26 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import model.Comment;
 import model.Target;
 
 public class TargetController extends CommonProprietiesController{
 
-    @FXML
+	@FXML
     private ResourceBundle resources;
 
     @FXML
@@ -49,7 +55,7 @@ public class TargetController extends CommonProprietiesController{
     private TableColumn<Comment, String> commentColumn;
 
     @FXML
-    private TableColumn<Comment, Target> editColumn;
+    private TableColumn<Comment, String> editColumn;
 
     @FXML
     private TextArea commentTextArea;
@@ -106,7 +112,15 @@ public class TargetController extends CommonProprietiesController{
     
     @FXML
     void handleUpdateCommentPressed(ActionEvent event) {
-
+    	
+    	System.out.println(selectedComment);
+    	
+    	Comment newComm = selectedComment.get();
+    	int index = commentList.indexOf(newComm);
+    	
+    	newComm.setText(commentTextArea.getText());
+    	
+    	commentList.set(index, newComm);
     }
 
     @FXML
@@ -122,10 +136,77 @@ public class TargetController extends CommonProprietiesController{
         assert commentColumn != null : "fx:id=\"commentColumn\" was not injected: check your FXML file 'Target.fxml'.";
         assert editColumn != null : "fx:id=\"editColumn\" was not injected: check your FXML file 'Target.fxml'.";
         assert commentTextArea != null : "fx:id=\"commentTextArea\" was not injected: check your FXML file 'Target.fxml'.";
+        
+        // Sets target's name
+        Target targetName = selectedTarget.get();
+        targetsNameTextField.setText(targetName.getTargetName());
 
-        //TODO: add dummies + set the edit button (add an update button for after editing an comment)
+
+        
+        // Adding a comment
+        addComment.disableProperty().bind(commentTextArea.textProperty().isEmpty());
+        
+        // Comments in the target
+        commentsTableView.setItems(commentList);
+        
+        // Comments for each column
+        commentColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getText()));
+        
+        // For changes just in any case
+        commentsTableView.getSelectionModel().selectedItemProperty().addListener((ChangeListener<? super Comment>) new ChangeListener<Comment>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Comment> observable, Comment oldValue, Comment newValue) {
+				
+				System.out.println("Table selection changed called: " + newValue);
+				Comment comm = selectedComment.get();
+				
+				
+			}
+        });
         
         
+        // Edit button for editColumn
+        var editCallBack = new Callback<TableColumn<Comment, String>, TableCell<Comment, String>>(){
+
+			@Override
+			public TableCell<Comment, String> call(TableColumn<Comment, String> param) {
+				
+				TableCell<Comment, String> cell = new TableCell<Comment, String>(){
+					
+					Button editButton = new Button("Edit");
+					
+					public void updateItem(String item, boolean empty) {
+						
+						super.updateItem(item, empty);
+						
+						if (empty) {
+							setGraphic(null);
+							setText(null);
+						} else {
+							editButton.setOnAction(e -> {
+								Comment comm = getTableView().getItems().get(getIndex());
+								commentTextArea.setText(comm.getText());
+//								comm.setText(commentTextArea.getText());
+							});
+							setGraphic(editButton);
+							setText(null);
+						}
+					}
+					
+				};
+				
+				return cell;
+			}
+        	
+        };
+        editColumn.setCellFactory(editCallBack);
         
+        
+    }
+    
+    // Update method
+    private void updateComment(Comment comment) {
+    	commentTextArea.setText(comment.getText());
     }
 }

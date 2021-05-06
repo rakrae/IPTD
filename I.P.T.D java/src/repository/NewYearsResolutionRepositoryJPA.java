@@ -1,5 +1,6 @@
 package repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 import model.NewYearsResolution;
 
 public class NewYearsResolutionRepositoryJPA implements NewYearsResolutionRepository {
@@ -61,9 +63,11 @@ public class NewYearsResolutionRepositoryJPA implements NewYearsResolutionReposi
 		EntityTransaction et = em.getTransaction();
 
 		et.begin();
-		@SuppressWarnings("unchecked")
-		List<NewYearsResolution> nyrs = (List<NewYearsResolution>) em.createQuery("SELECT n FROM NewYearsResolution n")
-				.getResultList();
+		List<NewYearsResolution> nyrs = new ArrayList<>();
+		
+		TypedQuery<NewYearsResolution> query = em.createNamedQuery("readAllNYRResolutions", NewYearsResolution.class);
+		nyrs = query.getResultList();
+		
 		et.commit();
 
 		em.close();

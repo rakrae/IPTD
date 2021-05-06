@@ -1,5 +1,6 @@
 package repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 import model.Target;
 
 public class TargetRepositoryJPA implements TargetRepository {
@@ -59,8 +61,11 @@ public class TargetRepositoryJPA implements TargetRepository {
 		EntityTransaction et = em.getTransaction();
 		
 		et.begin();
-		@SuppressWarnings("unchecked")
-		List<Target> targets = (List<Target>) em.createQuery("SELECT t FROM Target t").getResultList();
+		List<Target> targets = new ArrayList<>();
+		
+		TypedQuery<Target> query = em.createNamedQuery("readAllTargets", Target.class);
+		targets = query.getResultList();
+		
 		et.commit();
 		
 		em.close();

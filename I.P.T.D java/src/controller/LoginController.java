@@ -1,27 +1,22 @@
 package controller;
 
-import java.awt.DisplayMode;
+import java.util.List;
+import java.util.Optional;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.Account;
 
 public class LoginController extends CommonProprietiesController {
 
-    @FXML
+
+	@FXML
     private ResourceBundle resources;
 
     @FXML
@@ -54,22 +49,49 @@ public class LoginController extends CommonProprietiesController {
     	Stage primaryStage = (Stage) accountTextField.getScene().getWindow();
     	primaryStage.close();
     	
-    	/*
-    	 * if else statement wird hizugefügt um Konto zu 
-    	 * überprüfen ob es schon gibt oder nicht und auch
-    	 * für die korretheit der Daten
-    	 * 
-    	 */
-    	String PERSISTANCE_UNIT_NAME = "IPTD";
-    	EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTANCE_UNIT_NAME);
-    	EntityManager em = emf.createEntityManager();
+    	List<Account> accounts = accountRepository.readAll();
     	
-    	accountRepository.readAll();
-    	
-    	
-    	openScene(PERSISTANCE_NAME_ACCOUNT);
-    	
-    	primaryStage.hide();
+    	// searching for a matching account and password
+    	if(accountTextField.getText().isEmpty() && passwordTextField.getText().isEmpty()) {
+
+    		String first = "Fill in the fields!";
+			String second = "Try again";
+			
+			ModalDialog dialog = new ModalDialog(first, second);
+    		Optional<ButtonType> result = dialog.showAndWait();
+			if(result.isPresent()) {
+    			if(result.get() == ButtonType.OK) {
+    				openScene(PERSISTANCE_NAME_LOGIN);
+    				System.out.println("Dialog ok");
+    						}
+						}
+	        } else {
+	        
+	        int i = 0;
+    		for(Account a : accounts) {
+    			
+    			checkAccount(a);
+    			
+    			if(!a.getAccount().equals(accountTextField.getText()) && !a.getPassword().equals(passwordTextField.getText())) {
+    						
+    								++i;
+    								if(i == accounts.size()) {
+                						String first = "Incorect account and password!";
+                	    				String second = "Try again";
+                	    				
+                	    				ModalDialog dialog = new ModalDialog(first, second);
+                	    	    		Optional<ButtonType> result = dialog.showAndWait();
+                	    				if(result.isPresent()) {
+                	    	    			if(result.get() == ButtonType.OK) {
+                	    	    				openScene(PERSISTANCE_NAME_LOGIN);
+                	    	    				System.out.println("Dialog ok");
+                				
+                	    	    						} 
+                	    							}
+                								}
+        									}
+	        							}
+	        						}
     	
     }
 
@@ -93,6 +115,24 @@ public class LoginController extends CommonProprietiesController {
         assert newAccount != null : "fx:id=\"newAccount\" was not injected: check your FXML file 'Login.fxml'.";
 
     }
+    
+    // Login method
+    public void checkAccount(Account account) {
+    	
+    	if(account.getAccount().equals(accountTextField.getText()) && account.getPassword().equals(passwordTextField.getText())) {
+
+    		// It sets the account in the account controller
+    		selectedAccount.setValue(account);
+    		
+    		// Opens Account scene
+    		openScene(PERSISTANCE_NAME_ACCOUNT);
+
+//    		selectedAccount.unbind();
+
+    		} 
+    	
+    	}
+    
     
     
 }
