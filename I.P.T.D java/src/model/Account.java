@@ -13,19 +13,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
 
 
 @Entity
-@Access(AccessType.PROPERTY)
 @NamedQuery(name = "readAllAccounts", query = "select ac from Account ac")
+@Table(name = "account")
 public class Account implements Serializable {
 
-	
-	private LongProperty id = new SimpleLongProperty();
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
-	@Column(nullable = false, unique = true)
+	@Column(unique = true)
 	private String account;
 	private String password;
 	private String firstName;
@@ -34,27 +36,15 @@ public class Account implements Serializable {
 	private int age;
 
 	// damit kannst du von Account auf yearList zugreifen kannst
-	@OneToOne(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private YearList yearList;
 
-	public Account() {
-		
-		this.id = new SimpleLongProperty();
-	
-	}
-
-	public YearList getYearList() {
-		return yearList;
-	}
-
-	public void setYearList(YearList yearList) {
-		this.yearList = yearList;
-	}
+	public Account() {}
 
 	public Account(long id,String account, String password, String firstName, String lastName, String gender, int age) {
 
 		super();
-		this.id = new SimpleLongProperty(id);
+		this.id = id;
 		this.account = account;
 		this.password = password;
 		this.firstName = firstName;
@@ -68,7 +58,7 @@ public class Account implements Serializable {
 	public Account(long id, String account, String password, String firstName, String lastName, String gender, int age,
 			YearList yearList) {
 		super();
-		this.id = new SimpleLongProperty(id);
+		this.id = id;
 		this.account = account;
 		this.password = password;
 		this.firstName = firstName;
@@ -79,14 +69,13 @@ public class Account implements Serializable {
 
 	}
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	public long getId() {
-		return this.id.get();
+		return id;
 	}
 
 	public void setId(long id) {
-		this.id.set(id);;
+		this.id = id;
 	}
 
 	public String getAccount() {
@@ -135,6 +124,14 @@ public class Account implements Serializable {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+	
+	public YearList getYearList() {
+		return yearList;
+	}
+
+	public void setYearList(YearList yearList) {
+		this.yearList = yearList;
 	}
 
 	@Override

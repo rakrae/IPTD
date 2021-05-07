@@ -13,7 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 
-@Entity(name = "Target")
+@Entity
 @NamedQuery(name = "readAllTargets", query = "select t from Target t")
 public class Target implements Serializable {
 
@@ -25,9 +25,7 @@ public class Target implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Comment> comments;
 
-	public Target() {
-
-	}
+	public Target() {}
 
 	public Target(long id, String targetName, List<Comment> comments) {
 		super();
@@ -36,10 +34,12 @@ public class Target implements Serializable {
 		this.comments = comments;
 	}
 
-	public Target(String targetName, List<Comment> comments) {
-		super();
-		this.targetName = targetName;
-		this.comments = comments;
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getTargetName() {

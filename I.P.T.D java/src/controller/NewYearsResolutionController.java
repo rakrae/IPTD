@@ -63,7 +63,7 @@ public class NewYearsResolutionController extends CommonProprietiesController {
 
 		if (!target_Text.isEmpty()) {
 
-			Target target = new Target(target_Text, commentList);
+			Target target = new Target(0l,target_Text, commentList);
 			System.out.println(target);
 
 			targetList.add(target);

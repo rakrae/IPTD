@@ -4,6 +4,9 @@ import java.net.URL;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -118,9 +121,9 @@ public class AccountController extends CommonProprietiesController {
     	
     	Stage newStage = (Stage) editAccountButton.getScene().getWindow();
 		newStage.close();
-
+	
 		openSceneOnHidden(PERSISTANCE_NAME_YEARLIST, newStage);
-    	
+		
 		newStage.hide();
     }
 
@@ -146,7 +149,6 @@ public class AccountController extends CommonProprietiesController {
         accountText.setText(currentAccount.getAccount());
         firstNameText.setText(currentAccount.getFirstName());
         lastNameText.setText(currentAccount.getLastName());
-        
         
         accountList.addListener(new ListChangeListener<Account>() {
 
@@ -174,6 +176,9 @@ public class AccountController extends CommonProprietiesController {
 			}
         	
         });
+        
+        
+        
         
         
     }

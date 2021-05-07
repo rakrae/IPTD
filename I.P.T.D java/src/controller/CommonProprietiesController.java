@@ -40,16 +40,25 @@ public class CommonProprietiesController {
 	static final String PERSISTANCE_NAME_YEARLIST = "/application/YearList.fxml";
 	static final String PERSISTANCE_NAME_TARGET = "/application/Target.fxml";
 
+	
+	
+	
 	// Account entity repository
 	static AccountRepository accountRepository = new AccountRepositoryJPA();
 	static ObservableList<Account> accountList = FXCollections.observableArrayList(accountRepository.readAll());
 	static ObjectProperty<Account> selectedAccount = new SimpleObjectProperty<Account>();
-
+	
 	// YearList entity repository
 	static YearListRepository yearListRepository = new YearListRepositoryJPA();
 	static ObservableList<YearList> yearList = FXCollections.observableArrayList(yearListRepository.readAll());
 	static ObjectProperty<YearList> selectedYearList = new SimpleObjectProperty<YearList>();
+	
+	
 
+	
+	
+	
+	
 	// NewYearsResolution entity repository
 	static NewYearsResolutionRepository nyrRepository = new NewYearsResolutionRepositoryJPA();
 	static ObservableList<NewYearsResolution> nyrList = FXCollections.observableArrayList(nyrRepository.readAll());
@@ -112,5 +121,7 @@ public class CommonProprietiesController {
 		}
 
 	}
+	
+	
 
 }

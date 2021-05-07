@@ -51,8 +51,24 @@ public class LoginController extends CommonProprietiesController {
     	
     	List<Account> accounts = accountRepository.readAll();
     	
-    	// searching for a matching account and password
-    	if(accountTextField.getText().isEmpty() && passwordTextField.getText().isEmpty()) {
+    	// Checking if the account list is empty or not!
+//    	if(accounts.isEmpty()) {
+//    		String first = "Account list is empty!";
+//			String second = "Create an account first";
+//			
+//			ModalDialog dialog = new ModalDialog(first, second);
+//    		Optional<ButtonType> result = dialog.showAndWait();
+//			if(result.isPresent()) {
+//    			if(result.get() == ButtonType.OK) {
+//    				openScene(PERSISTANCE_NAME_LOGIN);
+//    				System.out.println("Dialog ok");
+//	
+//    						} 
+//						}
+//    	}
+    	
+    	// Triggers only if the fields are empty
+    	if(accountTextField.getText().isEmpty() || passwordTextField.getText().isEmpty()) {
 
     		String first = "Fill in the fields!";
 			String second = "Try again";
@@ -65,34 +81,37 @@ public class LoginController extends CommonProprietiesController {
     				System.out.println("Dialog ok");
     						}
 						}
-	        } else {
-	        
-	        int i = 0;
-    		for(Account a : accounts) {
-    			
-    			checkAccount(a);
-    			
-    			if(!a.getAccount().equals(accountTextField.getText()) && !a.getPassword().equals(passwordTextField.getText())) {
-    						
-    								++i;
-    								if(i == accounts.size()) {
-                						String first = "Incorect account and password!";
-                	    				String second = "Try again";
-                	    				
-                	    				ModalDialog dialog = new ModalDialog(first, second);
-                	    	    		Optional<ButtonType> result = dialog.showAndWait();
-                	    				if(result.isPresent()) {
-                	    	    			if(result.get() == ButtonType.OK) {
-                	    	    				openScene(PERSISTANCE_NAME_LOGIN);
-                	    	    				System.out.println("Dialog ok");
-                				
-                	    	    						} 
-                	    							}
-                								}
-        									}
-	        							}
-	        						}
+			
+	    	} else { 
+
+	    	int i = 0;
+	    		
+	        for(Account a : accounts) {
     	
+	        	checkAccount(a);
+	        	
+	        	// Mit boolean hätte es nicht funktioniert da ich so oft einen ModalDialog bekommen hätte wie viele accounts gibt es
+	        		if(!a.getAccount().equals(accountTextField.getText()) && !a.getPassword().equals(passwordTextField.getText())) {
+    						
+						++i;
+						if(i == accounts.size()) {
+        						String first = "Incorect account and password!";
+        	    				String second = "Try again";
+        	    				
+        	    				ModalDialog dialog = new ModalDialog(first, second);
+        	    	    		Optional<ButtonType> result = dialog.showAndWait();
+        	    				if(result.isPresent()) {
+        	    	    			if(result.get() == ButtonType.OK) {
+        	    	    				openScene(PERSISTANCE_NAME_LOGIN);
+        	    	    				System.out.println("Dialog ok");
+        				
+        	    	    						} 
+        	    							}
+        								}
+									}
+    							}
+    						}
+
     }
 
     @FXML
@@ -116,9 +135,9 @@ public class LoginController extends CommonProprietiesController {
 
     }
     
-    // Login method
+    // Login method 
     public void checkAccount(Account account) {
-    	
+
     	if(account.getAccount().equals(accountTextField.getText()) && account.getPassword().equals(passwordTextField.getText())) {
 
     		// It sets the account in the account controller
@@ -128,11 +147,10 @@ public class LoginController extends CommonProprietiesController {
     		openScene(PERSISTANCE_NAME_ACCOUNT);
 
 //    		selectedAccount.unbind();
-
-    		} 
-    	
-    	}
+    				} 
+    			}
+    		
+    }
     
     
     
-}

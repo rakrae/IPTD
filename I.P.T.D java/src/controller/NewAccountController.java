@@ -1,7 +1,6 @@
 package controller;
 
 import java.net.URL;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -12,9 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Account;
-import model.NewYearsResolution;
 import model.YearList;
-
 
 public class NewAccountController extends CommonProprietiesController {
 
@@ -66,9 +63,7 @@ public class NewAccountController extends CommonProprietiesController {
     // Creating a new account
     @FXML
     void handleCreateAccountPressed(ActionEvent event) {
-    	
-    	
-    	
+
     	String account = accountTextField.getText();
     	String password = passwordTextField.getText();
     	String rePassword = reenterPasswordTextField.getText();
@@ -79,13 +74,26 @@ public class NewAccountController extends CommonProprietiesController {
     	int age = Integer.parseInt(ageString);
     	
     	if(!account.isEmpty() && !password.isEmpty() && password.equals(rePassword) && !firstName.isEmpty() && !lastName.isEmpty() && !gender.isEmpty() && age != 0 && age > 0){
-    		Account newAccount = new Account(0l,account, password, firstName, lastName, gender, age);
+    		
+    		/*
+    		 * 
+    		 */
+    		
+    		
+    		long i = selectedYearList.get().getId();
+    		
+    		YearList yl = new YearList(i, null);
+    		yearList.add(yl);
+    		yearListRepository.add(yl);
+    		
+    		Account newAccount = new Account(0l,account, password, firstName, lastName, gender, age,yl);
     		
     		System.out.println(accountList);
     		// Adding the new account 
     		accountList.add(newAccount);
     		accountRepository.add(newAccount);
     		
+   
     		System.out.println(accountList);
     			
     			String first = "Account Succesfully created!";
@@ -107,6 +115,7 @@ public class NewAccountController extends CommonProprietiesController {
         				System.out.println("Dialog cancel");
         			}
         		}
+        		
     	} else {
     		
     	}

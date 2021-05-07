@@ -79,12 +79,13 @@ public class YearList_Controller extends CommonProprietiesController {
 		// checking if the name is not empty
 		if (!nyrName.isEmpty()) {
 
-			NewYearsResolution newyearsresolution = new NewYearsResolution(nyrName, targetList);
+			NewYearsResolution newyearsresolution = new NewYearsResolution(0l,nyrName, null);
 			System.out.println(newyearsresolution);
 
 			nyrList.add(newyearsresolution);
 			nyrRepository.add(newyearsresolution);
-
+			
+			
 			System.out.println(nyrList);
 		}
 
@@ -107,13 +108,12 @@ public class YearList_Controller extends CommonProprietiesController {
 		assert nyrTextField != null
 				: "fx:id=\"iptdTextField\" was not injected: check your FXML file 'IPTD_Lists.fxml'.";
 
-
+		
 		// Should open the NewYearsResolution
 
 		// adding a NYR List
-		createNewList.disableProperty().bind(nyrTextField.textProperty().isEmpty()); // not sure at all about (and) as
-																						// for binding -> testing it!
-
+		createNewList.disableProperty().bind(nyrTextField.textProperty().isEmpty()); 
+		
 		// NewYearsResolutions in the YearList
 		yearListView.setItems(nyrList);
 

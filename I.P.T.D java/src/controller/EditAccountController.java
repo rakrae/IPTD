@@ -79,36 +79,33 @@ public class EditAccountController extends CommonProprietiesController {
     @FXML
     void handleSaveChangedPressed(ActionEvent event) {
     	
-    	Account newAccount = selectedAccount.get();
-    	
-    	int index = accountList.indexOf(newAccount); 
-    	
-    	String ageS = editAgeTextField.getText();
-    	
-    	int age = Integer.parseInt(ageS);
-    	
-    	if(newAccount.getPassword().equals(oldPasswordTextField.getText()) && newPasswordTextField.getText().equals(reenterPasswordTextField.getText())) {
-    	newAccount.setPassword(newPasswordTextField.getText());
-    	newAccount.setFirstName(editFirstNameTextfield.getText());
-    	newAccount.setLastName(editLastNameTextField.getText());
-    	newAccount.setGender(editGenderTextField.getText());
-    	newAccount.setAge(age);
-    	} else {
-    		String first = "Check the fields!";
-			String second = "Try again";
-			
-			ModalDialog dialog = new ModalDialog(first, second);
-    		Optional<ButtonType> result = dialog.showAndWait();
-			if(result.isPresent()) {
-    			if(result.get() == ButtonType.OK) {
-    				openScene(PERSISTANCE_NAME_EDIT_ACCOUNT);
+    	if(oldPasswordTextField.getText().isEmpty() || newPasswordTextField.getText().isEmpty() 
+    			|| reenterPasswordTextField.getText().isEmpty() || editFirstNameTextfield.getText().isEmpty()
+    			|| editLastNameTextField.getText().isEmpty() || editGenderTextField.getText().isEmpty()
+    			|| editAgeTextField.getText().isEmpty()) {
+    		
+    		String c = "Please fill all the fields!";
+    		String f = "Press ok";
+    		
+    		ModalDialog dialog_1D = new ModalDialog(c, f);
+    		Optional<ButtonType> result_1R = dialog_1D.showAndWait();
+    		if(result_1R.isPresent()) {
+    			if(result_1R.get() == ButtonType.OK) {
+    				
+    				Stage stageEdit = (Stage) saveChanges.getScene().getWindow();
+    				stageEdit.close();
+    				
+    				openScene(PERSISTANCE_NAME_ACCOUNT);
+    				
     				System.out.println("Dialog ok");
-    						}
-						}
+    					}
+    				}
+    	} else {
+    		
+    	updateAccount();
+    	
     	}
     	
-    	accountRepository.updateAccount(newAccount);
-    	accountList.set(index, newAccount);
     }
 
 	@FXML
@@ -124,6 +121,9 @@ public class EditAccountController extends CommonProprietiesController {
         assert backButton != null : "fx:id=\"back\" was not injected: check your FXML file 'EditAccount.fxml'.";
         assert saveChanges != null : "fx:id=\"saveChanges\" was not injected: check your FXML file 'EditAccount.fxml'.";
         
+        Account account = selectedAccount.get();
+        accountsNameTitle.setText(account.getAccount());
+        
         selectedAccount.addListener( new ChangeListener<Account>() {
 
 			@Override
@@ -138,6 +138,7 @@ public class EditAccountController extends CommonProprietiesController {
 				editGenderTextField.setText(newValue.getGender());
 				
 				int a = newValue.getAge();
+				@SuppressWarnings("deprecation")
 				Integer x = new Integer(a);
 				editAgeTextField.setText(x.toString().getClass().getName());
 				
@@ -148,6 +149,65 @@ public class EditAccountController extends CommonProprietiesController {
         
     }
 	
+	public void updateAccount() {
+		
+		Account newAccount = selectedAccount.get();
+    	
+    	accountList.remove(newAccount);
+    	accountRepository.delete(newAccount);
+    	
+//    	int index = accountList.indexOf(newAccount); 
+    	
+    	String ageS = editAgeTextField.getText();
+    	
+    	int age = Integer.parseInt(ageS);
+    	
+    	if(newAccount.getPassword().equals(oldPasswordTextField.getText()) && newPasswordTextField.getText().equals(reenterPasswordTextField.getText())) {
+    	newAccount.setPassword(newPasswordTextField.getText());
+    	newAccount.setFirstName(editFirstNameTextfield.getText());
+    	newAccount.setLastName(editLastNameTextField.getText());
+    	newAccount.setGender(editGenderTextField.getText());
+    	newAccount.setAge(age);
+    	
+    	String a = "Account updated!";
+		String b = "Press ok";
+		
+		ModalDialog dialog_D = new ModalDialog(a, b);
+		Optional<ButtonType> result_R = dialog_D.showAndWait();
+		if(result_R.isPresent()) {
+			if(result_R.get() == ButtonType.OK) {
+				
+				Stage stageEdit = (Stage) saveChanges.getScene().getWindow();
+				stageEdit.close();
+				
+				openScene(PERSISTANCE_NAME_ACCOUNT);
+				
+				System.out.println("Dialog ok");
+					}
+				}
+		
+    	} else {
+    		String first = "Check the fields!";
+			String second = "Try again";
+			
+			ModalDialog dialog = new ModalDialog(first, second);
+    		Optional<ButtonType> result = dialog.showAndWait();
+			if(result.isPresent()) {
+    			if(result.get() == ButtonType.OK) {
+    				
+    				Stage stageEdit = (Stage) saveChanges.getScene().getWindow();
+    				stageEdit.close();
+    				
+    				openScene(PERSISTANCE_NAME_EDIT_ACCOUNT);
+    				
+    				System.out.println("Dialog ok");
+    						}
+						}
+    	}
+    	
+    	accountRepository.updateAccount(newAccount);
+    	accountList.add(newAccount);
+	}
 	
     
 }

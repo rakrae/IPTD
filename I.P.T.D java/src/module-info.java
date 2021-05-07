@@ -4,7 +4,6 @@ module I.P.T.D {
 	requires javafx.fxml;
 	requires javafx.base;
 	requires java.desktop;
-	requires eclipselink;
 	requires jakarta.persistence;
 	requires org.apache.derby.engine;
 	requires org.junit.jupiter.api;

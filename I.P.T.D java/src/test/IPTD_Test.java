@@ -1,9 +1,7 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
-
 import application.Main;
 import controller.AccountController;
 import controller.CommonProprietiesController;
@@ -19,7 +17,6 @@ import model.Comment;
 import model.NewYearsResolution;
 import model.Target;
 import model.YearList;
-import repository.AccountRepository;
 import repository.AccountRepositoryJPA;
 import repository.CommentRepositoryJPA;
 import repository.NewYearsResolutionRepositoryJPA;
